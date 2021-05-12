@@ -4,26 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".SignupPage">
 
-    <TextView
-        android:id="@+id/name"
+    <EditText
+        android:id="@+id/phoneField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="HELLO USER"
+        android:layout_marginStart="8dp"
+        android:ems="10"
+        android:inputType="phone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Sign out"
+        android:text="Send Code"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name"
-        android:onClick="signout"/>
+        app:layout_constraintStart_toEndOf="@+id/phoneField"
+        app:layout_constraintTop_toTopOf="@+id/phoneField"
+        android:onClick="sendVerificationCode"/>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Phone Number"
+        app:layout_constraintBottom_toTopOf="@+id/phoneField"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

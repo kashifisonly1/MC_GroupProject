@@ -9,6 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WhatsappClone">
+        <activity android:name=".ProfileCreationPage"></activity>
+        <activity android:name=".CodeVerificationPage" />
+        <activity android:name=".SignupPage" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
