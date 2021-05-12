@@ -1,0 +1,40 @@
+Screens:
+---------------------------------------------- 
+|=> login/create account screen (firebase)   |
+|=> after login it will ask for name and DP  |
+---------------------------------------------- 
+=> chats show page
+=> status page
+=> settings page (change about, name, DP And manage block contact)
+=> chat with a person (simple chat + emojis)
+=> search system
+=> block chat
+=> delete chat
+=> mute chat
+=> contact link with mobile stored contacts
+
+
+
+=> groups(chat, mentioning, admin, delete...), call, video call, voice notes, media files send krna, contact send, ringtone, broadcast... (if we can)
+
+
+
+
+firebase and nodejs
+=> authentication email, phone
+=> database json
+=> hosting 
+=> storage 
+=> backend functions
+
+virgil for end to end encryption
+
+
+
+
+
+
+
+
+
+
