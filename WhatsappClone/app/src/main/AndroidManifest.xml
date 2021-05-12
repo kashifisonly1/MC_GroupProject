@@ -11,13 +11,14 @@
         android:theme="@style/Theme.WhatsappClone">
         <activity android:name=".SmsVerificationActivity"></activity>
         <activity android:name=".ProfileInfoActivity" />
-        <activity android:name=".SignupActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".SignupActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity">
         </activity>
     </application>
 

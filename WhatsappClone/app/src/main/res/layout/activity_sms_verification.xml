@@ -36,5 +36,5 @@
         android:text="Send SMS"
         android:textColor="@color/light_green"
         android:layout_gravity="left"
-        android:background="transparent"></Button>
+        android:background="@color/transparent"></Button>
 </LinearLayout>
