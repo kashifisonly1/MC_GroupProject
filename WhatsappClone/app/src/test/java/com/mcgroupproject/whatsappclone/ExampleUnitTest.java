@@ -1,4 +1,4 @@
-package com.mcgroupproject.whatsapp;
+package com.mcgroupproject.whatsappclone;
 
 import org.junit.Test;
 

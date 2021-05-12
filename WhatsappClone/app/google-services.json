@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "58504528962",
+    "firebase_url": "https://mc-group-project-default-rtdb.firebaseio.com",
+    "project_id": "mc-group-project",
+    "storage_bucket": "mc-group-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:58504528962:android:5ae882b0209ae6a6b599db",
+        "android_client_info": {
+          "package_name": "com.mcgroupproject.whatsappclone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "58504528962-r984v49ifg5m8dqv3t5jeja7r1cramcs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mcgroupproject.whatsappclone",
+            "certificate_hash": "a9f178081d497fb41b3476f230e514945eec724b"
+          }
+        },
+        {
+          "client_id": "58504528962-h4ogv6pp1ebc2osivbgs4kblaih8fevp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-4qYbt60Xl-i9EEQbsXTvnfSwDd209g0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "58504528962-h4ogv6pp1ebc2osivbgs4kblaih8fevp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
