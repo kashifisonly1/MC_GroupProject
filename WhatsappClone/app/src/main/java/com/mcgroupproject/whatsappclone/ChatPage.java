@@ -52,17 +52,15 @@ public class ChatPage extends AppCompatActivity {
         online_statusView.setText(getIntent().getStringExtra("status"));
         phoneView.setText(phone);
         msgBox = findViewById(R.id.msg_area);
-        Query ref = db.getReference("users").orderByChild("Phone").equalTo(phone).getRef();
+        DatabaseReference  ref= db.getReference("users/"+id);
         ref.keepSynced(true);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot d:snapshot.getChildren()){
-                    User user = d.getValue(User.class);
-                    nameView.setText(user.Name);
-                    online_statusView.setText(user.Status);
-                    phoneView.setText(user.Phone);
-                }
+                User user= snapshot.getValue(User.class);
+                nameView.setText(user.Name);
+                online_statusView.setText(user.Status);
+                phoneView.setText(user.Phone);
             }
 
             @Override

@@ -22,6 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
 
     FirebaseDatabase db;
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        db.getReference().child("users").child(mAuth.getUid()).child("Status").onDisconnect().setValue(ServerValue.TIMESTAMP);
+        db.getReference().child("users").child(mAuth.getUid()).child("Status").onDisconnect().setValue(ServerValue.TIMESTAMP.toString());
         DatabaseReference recRev = db.getReference("messages/"+mAuth.getUid());
         recRev.keepSynced(true);
         recRev.addChildEventListener(new ChildEventListener() {
@@ -116,18 +118,22 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Connection Error", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    User user = null;
-                    for(DataSnapshot d:task.getResult().getChildren())
-                        user = d.getValue(User.class);
-                    if(user==null)
+                    Map<String, Map<String, String>> map = (Map)task.getResult().getValue();
+                    if(map==null)
+                    {
                         Toast.makeText(getApplicationContext(), "Please enter valid phone", Toast.LENGTH_LONG).show();
-                    else{
-                        intent.putExtra("phone", user.Phone);
-                        intent.putExtra("uid", user.UID);
-                        intent.putExtra("name", user.Name);
-                        intent.putExtra("status", user.Status);
-                        startActivity(intent);
+                        return;
                     }
+                    String key = map.keySet().iterator().next();
+                    Map<String, String> user = map.get(key);
+                    System.out.println(user);
+                   // for(DataSnapshot d:task.getResult().getChildren())
+                     //   user = d.getValue(User.class);
+                    intent.putExtra("phone", user.get("Phone"));
+                    intent.putExtra("uid", user.get("UID"));
+                    intent.putExtra("name", user.get("Name"));
+                    intent.putExtra("status", user.get("Status"));
+                    startActivity(intent);
                 }
             }
         });
