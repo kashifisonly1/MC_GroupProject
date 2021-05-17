@@ -35,14 +35,14 @@ public class ProfileCreationPage extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     EditText textView;
-    FirebaseFirestore db;
+    FirebaseDatabase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_creation_page);
-        mAuth = FirebaseAuth.getInstance();
+        mAuth = Firebase.auth;
         textView = findViewById(R.id.nameField);
-        db = FirebaseFirestore.getInstance();
+        db = Firebase.db;
         textView.setText(mAuth.getCurrentUser().getDisplayName());
     }
 
@@ -55,10 +55,11 @@ public class ProfileCreationPage extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
-                    Map<String, Object> user = new HashMap<String, Object>();
-                    user.put("UID", mAuth.getUid());
-                    user.put("Name", mAuth.getCurrentUser().getDisplayName());
-                    user.put("Phone", mAuth.getCurrentUser().getPhoneNumber());
+                    User user = new User();
+                    user.UID= mAuth.getUid();
+                    user.Name=mAuth.getCurrentUser().getDisplayName();
+                    user.Phone=mAuth.getCurrentUser().getPhoneNumber();
+                    user.Status="online";
                     updateDatabase(user);
                 }else {
                     Toast.makeText(getApplicationContext(), "Could not change name", Toast.LENGTH_LONG).show();
@@ -66,42 +67,20 @@ public class ProfileCreationPage extends AppCompatActivity {
             }
         });
     }
-    private void updateDatabase(Map<String, Object> user)
+    private void updateDatabase(User user)
     {
-        db.collection("users")
-        .whereEqualTo("UID", user.get("UID"))
-        .get()
-        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.getReference().child("users").child(user.UID)
+        .setValue(user)
+        .addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+            public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    if(task.getResult().size()!=0) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            document.getReference().update(user);
-                            Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                            startActivity(intent);
-                        }
-                    }
-                    else{
-                        db.collection("users").add(user)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(getApplicationContext(), "Could not update name", Toast.LENGTH_LONG).show();
-                            }
-                        });
-                    }
+                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                    startActivity(intent);
                 } else {
-                    Toast.makeText(getApplicationContext(), "Could not update name", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Could not update data", Toast.LENGTH_LONG).show();
                 }
             }
         });
-
-
     }
 }

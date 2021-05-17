@@ -26,7 +26,7 @@ public class CodeVerificationPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_code_verification_page);
-        mAuth = FirebaseAuth.getInstance();
+        mAuth = Firebase.auth;
         codeSent = getIntent().getStringExtra("verificationID");
     }
     public void verifySignInCode(View view){
