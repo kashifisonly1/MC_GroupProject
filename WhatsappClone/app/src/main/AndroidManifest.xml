@@ -10,7 +10,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WhatsappClone"
         android:usesCleartextTraffic="true">
+<<<<<<< Updated upstream
         <activity android:name=".activity_main_latest"></activity>
+=======
+        <activity android:name=".activity_message">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity_main_latest" >
+
+        </activity>
+>>>>>>> Stashed changes
         <activity android:name=".ChatPage" />
         <activity android:name=".ProfileCreationPage" />
         <activity android:name=".CodeVerificationPage" />
