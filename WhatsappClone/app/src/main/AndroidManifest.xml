@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mcgroupproject.whatsappclone">
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,7 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WhatsappClone"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity_main_latest"></activity>
+        <activity android:name=".activity_new_message"><intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter></activity>
+        <activity android:name=".activity_main_latest" />
         <activity android:name=".activity_message" />
         <activity android:name=".ChatPage" />
         <activity android:name=".ProfileCreationPage" />
@@ -18,11 +25,7 @@
         <activity android:name=".SignupPage" />
         <activity android:name=".MainActivity">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter></activity>
+        </activity>
     </application>
 
 </manifest>
