@@ -25,7 +25,7 @@
             app:civ_shadow_radius="10dp" />
 
         <TextView
-            android:id="@+id/profile_fname_label"
+            android:id="@+id/textView14"
             android:layout_width="match_parent"
             android:layout_height="49dp"
             android:paddingTop="10dp"
@@ -35,7 +35,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/profile_fname"
+            android:id="@+id/editTextTextPersonName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -44,32 +44,31 @@
             android:textColorLink="#8F00B7" />
 
         <TextView
-            android:id="@+id/profile_lname_label"
+            android:id="@+id/textView0"
             android:layout_width="match_parent"
             android:layout_height="49dp"
             android:paddingTop="10dp"
-            android:text="Phone"
+            android:text="Description"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/profile_lname"
+            android:id="@+id/editTextTextGroup1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Phone"
-            android:inputType="phone"
+            android:hint="Description"
+            android:inputType="text"
             android:textColorLink="#8F00B7" />
-
         <Button
-            android:id="@+id/profile_btn_create"
+            android:id="@+id/bprofile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/violet"
-            android:drawableLeft="@drawable/ic_upd_w"
+            android:drawableLeft="@drawable/ic_create_w"
             android:padding="16dp"
-            android:text="Update"
+            android:text="Create"
             android:textSize="18sp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

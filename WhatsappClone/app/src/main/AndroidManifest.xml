@@ -12,11 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WhatsappClone"
         android:usesCleartextTraffic="true">
-        <activity android:name=".profile"><intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter></activity>
+        <activity android:name=".new_group"/>
+        <activity android:name=".profile"/>
         <activity android:name=".settings" />
         <activity android:name=".search" />
         <activity android:name=".activity_new_message" />
@@ -27,7 +24,11 @@
         <activity android:name=".CodeVerificationPage" />
         <activity android:name=".SignupPage" />
         <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
