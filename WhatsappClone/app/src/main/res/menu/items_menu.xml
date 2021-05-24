@@ -21,7 +21,7 @@
         android:title="@string/search"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_logout"
+        android:id="@+id/action_settings"
         android:enabled="true"
         android:icon="@drawable/ic_setting"
         android:title="@string/setting"
