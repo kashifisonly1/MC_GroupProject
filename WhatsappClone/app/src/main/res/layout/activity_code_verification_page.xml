@@ -10,7 +10,7 @@
         android:id="@+id/codeField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="24dp"
         android:ems="10"
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,12 +21,12 @@
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="32dp"
+        android:onClick="verifySignInCode"
         android:text="Verify Code"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/codeField"
-        app:layout_constraintTop_toTopOf="@+id/codeField"
-        android:onClick="verifySignInCode"/>
+        app:layout_constraintTop_toTopOf="@+id/codeField" />
 
     <TextView
         android:id="@+id/textView3"
