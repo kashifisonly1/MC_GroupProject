@@ -6,26 +6,84 @@
     android:layout_height="match_parent"
     tools:context=".ProfileCreationPage">
 
-    <EditText
-        android:id="@+id/nameField"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Set Profile"
-        app:layout_constraintEnd_toEndOf="@+id/nameField"
-        app:layout_constraintStart_toStartOf="@+id/nameField"
-        app:layout_constraintTop_toBottomOf="@+id/nameField"
-        android:onClick="setName"/>
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:gravity="center|top|center_vertical"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/profile_img"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:rotation="-4"
+            android:rotationX="-8"
+            android:rotationY="-8"
+            android:src="@drawable/logo"
+            app:civ_border_color="#939091"
+            app:civ_border_width="4dp"
+            app:civ_shadow="true"
+            app:civ_shadow_color="#7E7980"
+            app:civ_shadow_radius="10dp" />
+
+        <TextView
+            android:id="@+id/profile_fname_label"
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:layout_marginStart="10dp"
+            android:paddingTop="10dp"
+            android:text="First Name"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold|italic" />
+
+        <EditText
+            android:id="@+id/profile_fname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:ems="10"
+            android:hint="First"
+            android:inputType="textPersonName"
+            android:textColorLink="#8F00B7"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/profile_lname_label"
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:layout_marginStart="10dp"
+            android:paddingTop="10dp"
+            android:text="Last Name"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold|italic" />
+
+        <EditText
+            android:id="@+id/profile_lname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:ems="10"
+            android:hint="Last"
+            android:inputType="textPersonName"
+            android:textColorLink="#8F00B7"
+            android:textStyle="italic" />
+
+        <Button
+            android:id="@+id/profile_btn_create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/browser_actions_title_color"
+            android:drawableLeft="@drawable/ic_create_w"
+            android:padding="16dp"
+            android:text="Create"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

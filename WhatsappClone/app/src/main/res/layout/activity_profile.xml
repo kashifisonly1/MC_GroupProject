@@ -25,7 +25,7 @@
             app:civ_shadow_radius="10dp" />
 
         <TextView
-            android:id="@+id/textView14"
+            android:id="@+id/profile_fname_label"
             android:layout_width="match_parent"
             android:layout_height="49dp"
             android:paddingTop="10dp"
@@ -35,7 +35,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/profile_fname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -44,7 +44,7 @@
             android:textColorLink="#8F00B7" />
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/profile_lname_label"
             android:layout_width="match_parent"
             android:layout_height="49dp"
             android:paddingTop="10dp"
@@ -54,7 +54,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName1"
+            android:id="@+id/profile_lname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -63,7 +63,7 @@
             android:textColorLink="#8F00B7" />
 
         <Button
-            android:id="@+id/bprofile"
+            android:id="@+id/profile_btn_create"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/violet"

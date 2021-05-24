@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/bprofile"
+            android:id="@+id/profile_btn_create"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/violet"
