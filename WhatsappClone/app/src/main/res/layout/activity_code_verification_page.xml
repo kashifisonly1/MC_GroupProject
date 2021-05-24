@@ -6,34 +6,68 @@
     android:layout_height="match_parent"
     tools:context=".CodeVerificationPage">
 
-    <EditText
-        android:id="@+id/codeField"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:ems="10"
-        android:inputType="number"
+
+    <LinearLayout
+        android:layout_width="335dp"
+        android:layout_height="712dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="19dp"
+        android:gravity="center|top|center_vertical"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:onClick="verifySignInCode"
-        android:text="Verify Code"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/codeField"
-        app:layout_constraintTop_toTopOf="@+id/codeField" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="Verification Code"
-        app:layout_constraintBottom_toTopOf="@+id/codeField"
-        app:layout_constraintStart_toStartOf="parent" />
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/sample"
+            app:civ_border_color="#FF8F00B7"
+            app:civ_border_width="4dp"
+            app:civ_shadow="true"
+            app:civ_shadow_color="#FF8F00B7"
+            app:civ_shadow_radius="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="161dp"
+            android:layout_marginTop="32dp"
+            android:orientation="horizontal"
+            android:paddingLeft="4dp">
+
+            <EditText
+                android:id="@+id/codeField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="80dp"
+                android:layout_marginRight="16dp"
+                android:ems="6"
+                android:hint="OTP"
+                android:inputType="phone"
+                android:textColorLink="#8F00B7"
+                android:textStyle="italic" />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="80dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="4dp"
+                android:background="@color/violet"
+                android:onClick="verifySignInCode"
+                android:text="Verify Code"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.973"
+                app:layout_constraintStart_toEndOf="@+id/codeField"
+                app:layout_constraintTop_toTopOf="@+id/codeField" />
+        </LinearLayout>
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

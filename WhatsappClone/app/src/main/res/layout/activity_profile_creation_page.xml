@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <com.mikhaellopez.circularimageview.CircularImageView
-            android:id="@+id/profile_img"
+            android:id="@+id/start_logo"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:rotation="-4"
