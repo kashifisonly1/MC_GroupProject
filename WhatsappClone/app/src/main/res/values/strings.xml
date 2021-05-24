@@ -15,10 +15,10 @@
     <string name="group">New Group</string>
     <string name="back">Back</string>
 
-    <string name="profile" >Profile</string>
-    <string name="search" >Search</string>
-    <string name="setting" >setting</string>
-    <string name="chat" >chats</string>
+    <string name="profile">Profile</string>
+    <string name="search">Search</string>
+    <string name="setting">setting</string>
+    <string name="chat">chats</string>
     <string name="login">LOGIN</string>
     <string name="register">JOIN-US</string>
     <string name="logo">LOGO</string>
