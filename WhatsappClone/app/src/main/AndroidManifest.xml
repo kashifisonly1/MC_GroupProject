@@ -12,11 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WhatsappClone"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity_new_message"><intent-filter>
+        <activity android:name=".activity_main_page"><intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter></activity>
+        <activity android:name=".activity_new_message" />
         <activity android:name=".activity_main_latest" />
         <activity android:name=".activity_message" />
         <activity android:name=".ChatPage" />
@@ -27,5 +28,7 @@
 
         </activity>
     </application>
+
+
 
 </manifest>
