@@ -1,56 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignupPage">
+    tools:context=".SignupPage"
+    android:orientation="vertical"
+    android:padding="30dp">
 
-    <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/circularImageView"
-        android:layout_width="180dp"
-        android:layout_height="152dp"
-        android:layout_marginTop="64dp"
-        android:src="@drawable/sample"
-        app:civ_border_color="#3f51b5"
-        app:civ_border_width="4dp"
-        app:civ_shadow="true"
-        app:civ_shadow_color="#3f51b5"
-        app:civ_shadow_radius="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.356"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Verify your phone number"
+        android:textColor="#0FA647"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp">
+
+    </TextView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="WhatsApp will send an SMS message to verify your phone number. Enter your country code and phone number:"
+        android:textSize="14sp"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/black"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+    </TextView>
 
     <EditText
         android:id="@+id/phoneField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginStart="8dp"
         android:autofillHints=""
+        android:backgroundTint="#0C7332"
+        android:backgroundTintMode="src_atop"
+        android:drawableStart="@drawable/ic_smartphone"
+        android:drawablePadding="12dp"
         android:ems="10"
         android:hint="@string/sample"
         android:inputType="phone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textColor="@color/black" />
 
-    <Button
-        android:id="@+id/Verify"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/send_code"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/phoneField"
-        app:layout_constraintTop_toTopOf="@+id/phoneField"
-        android:onClick="sendVerificationCode"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center|bottom"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/profile_btn_create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#0FA647"
+            android:text="Next"
+            android:layout_gravity="center|bottom"
+            android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="@string/phone_number"
-        app:layout_constraintBottom_toTopOf="@+id/phoneField"
-        app:layout_constraintStart_toStartOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:shadowColor="@color/black"
+            android:textSize="12dp"
+            android:layout_marginBottom="8dp"
+            android:text="Carrier SMS charges may apply" />
+    </LinearLayout>
+
+</LinearLayout>
