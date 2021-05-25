@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ProfileCreationPage">
-
 
 
     <LinearLayout
@@ -17,71 +17,66 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <com.mikhaellopez.circularimageview.CircularImageView
-            android:id="@+id/start_logo"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:rotation="-4"
-            android:rotationX="-8"
-            android:rotationY="-8"
-            android:src="@drawable/logo"
-            app:civ_border_color="#939091"
+            android:src="@drawable/sample"
+            app:civ_border_color="#FF8F00B7"
             app:civ_border_width="4dp"
             app:civ_shadow="true"
-            app:civ_shadow_color="#7E7980"
+            app:civ_shadow_color="#FF8F00B7"
             app:civ_shadow_radius="10dp" />
 
         <TextView
             android:id="@+id/profile_fname_label"
             android:layout_width="match_parent"
             android:layout_height="49dp"
-            android:layout_marginStart="10dp"
             android:paddingTop="10dp"
-            android:text="First Name"
+            android:text="Name"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:textStyle="bold|italic" />
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/nameField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:ems="10"
-            android:hint="First"
+            android:hint="Name"
             android:inputType="textPersonName"
-            android:textColorLink="#8F00B7"
-            android:textStyle="italic" />
+            android:textColor="@color/black"
+            android:backgroundTint="#8F00B7"
+            android:textColorLink="#8F00B7" />
 
         <TextView
             android:id="@+id/profile_lname_label"
             android:layout_width="match_parent"
             android:layout_height="49dp"
-            android:layout_marginStart="10dp"
             android:paddingTop="10dp"
-            android:text="Last Name"
+            android:text="Phone"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:textStyle="bold|italic" />
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/profile_lname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:ems="10"
-            android:hint="Last"
-            android:inputType="textPersonName"
-            android:textColorLink="#8F00B7"
-            android:textStyle="italic" />
+            android:hint="Phone"
+            android:inputType="phone"
+            android:textColor="@color/black"
+            android:backgroundTint="#8F00B7"
+            android:textColorLink="#8F00B7" />
 
         <Button
             android:id="@+id/profile_btn_create"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/violet"
-            android:drawableLeft="@drawable/ic_create_w"
+            android:drawableLeft="@drawable/ic_upd_w"
             android:padding="16dp"
-            android:text="Create"
+            android:text="Update"
+            android:onClick="setName"
             android:textSize="18sp" />
     </LinearLayout>
 

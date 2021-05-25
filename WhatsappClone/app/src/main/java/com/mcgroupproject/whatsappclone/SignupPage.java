@@ -72,8 +72,11 @@ public class SignupPage extends AppCompatActivity {
         @Override
         public void onCodeSent(@NonNull String verificationId,
                                @NonNull PhoneAuthProvider.ForceResendingToken token) {
+            EditText phone = findViewById(R.id.phoneField);
+            String phoneNumber = phone.getText().toString();
             Intent intent = new Intent(getBaseContext(), CodeVerificationPage.class);
             intent.putExtra("verificationID", verificationId);
+            intent.putExtra("phoneNumber",phoneNumber);
             startActivity(intent);
         }
     };

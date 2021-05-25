@@ -43,8 +43,9 @@
         android:backgroundTintMode="src_atop"
         android:drawableStart="@drawable/ic_smartphone"
         android:drawablePadding="12dp"
-        android:ems="10"
-        android:hint="@string/sample"
+        android:ems="8"
+        android:hint="+923084306366"
+        android:textColorHint="@color/grey"
         android:inputType="phone"
         android:textColor="@color/black" />
 
@@ -59,6 +60,8 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#0FA647"
             android:text="Next"
+            android:textColor="@color/white"
+            android:onClick="sendVerificationCode"
             android:layout_gravity="center|bottom"
             android:textSize="18sp" />
 

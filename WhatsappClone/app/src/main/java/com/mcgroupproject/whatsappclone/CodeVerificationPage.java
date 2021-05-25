@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,12 +23,18 @@ public class CodeVerificationPage extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     String codeSent;
+    String phoneNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_code_verification_page);
         mAuth = Firebase.auth;
         codeSent = getIntent().getStringExtra("verificationID");
+        phoneNumber = getIntent().getStringExtra("phoneNumber");
+        TextView verificationPhone = (TextView)findViewById(R.id.verification_phone);
+        verificationPhone.setText(phoneNumber);
+        verificationPhone = (TextView)findViewById(R.id.verification_confirm_phone);
+        verificationPhone.setText(phoneNumber);
     }
     public void verifySignInCode(View view){
         EditText codeField = findViewById(R.id.codeField);
