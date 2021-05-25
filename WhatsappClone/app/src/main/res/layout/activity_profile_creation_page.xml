@@ -42,7 +42,7 @@
             android:textStyle="bold|italic" />
 
         <EditText
-            android:id="@+id/profile_fname"
+            android:id="@+id/nameField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"

@@ -8,10 +8,9 @@
 
 
     <LinearLayout
-        android:layout_width="335dp"
-        android:layout_height="712dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="19dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
         android:gravity="center|top|center_vertical"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -19,55 +18,119 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.mikhaellopez.circularimageview.CircularImageView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="40dp"
-            android:src="@drawable/sample"
-            app:civ_border_color="#FF8F00B7"
-            app:civ_border_width="4dp"
-            app:civ_shadow="true"
-            app:civ_shadow_color="#FF8F00B7"
-            app:civ_shadow_radius="10dp" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="161dp"
-            android:layout_marginTop="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingLeft="4dp">
+            android:layout_gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#0FA647"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginEnd="12dp"
+                android:textSize="22dp"
+                android:text="Verify">
+
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#0FA647"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="20dp"
+                android:textSize="22dp"
+                android:text="+923084306366">
+
+            </TextView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:text="Waiting for user to enter an SMS sent to ">
+
+            </TextView>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:textSize="18dp"
+                    android:text="+923084306366">
+
+                </TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wrong number?"
+                    android:textColor="#8dc8e6"
+                    android:textColorLink="#4F94B6"
+                    android:textSize="18dp"
+                    android:clickable="true">
+
+                </TextView>
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/codeField"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="80dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginTop="20dp"
                 android:ems="6"
-                android:hint="OTP"
-                android:inputType="phone"
-                android:textColorLink="#8F00B7"
-                android:textStyle="italic" />
+                android:hint="_ _ _  _ _ _"
+                android:textSize="24dp"
+                android:gravity="center"
+                android:backgroundTint="#41a296"
 
+                android:backgroundTintMode="screen"
+                android:inputType="phone"
+                android:textColorLink="#8F00B7"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:text="Enter 6-digit code"></TextView>
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="#0FA647"
+                android:layout_gravity="center"
+                android:text="Resend"
+                android:textSize="18sp"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="bottom">
             <Button
                 android:id="@+id/button3"
-                android:layout_width="101dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="32dp"
-                android:layout_marginTop="80dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="4dp"
-                android:background="@color/violet"
+                android:backgroundTint="#0FA647"
+                android:layout_gravity="center"
+                android:text="Confirm"
                 android:onClick="verifySignInCode"
-                android:text="Verify "
-                android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.973"
-                app:layout_constraintStart_toEndOf="@+id/codeField"
-                app:layout_constraintTop_toTopOf="@+id/codeField" />
+                android:textSize="18sp"
+                />
         </LinearLayout>
-
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

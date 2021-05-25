@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".SignupPage"
     android:orientation="vertical"
+    android:background="@color/white"
     android:padding="30dp">
 
     <TextView
@@ -69,6 +70,7 @@
             android:shadowColor="@color/black"
             android:textSize="12dp"
             android:layout_marginBottom="8dp"
+            android:onClick="sendVerificationCode"
             android:text="Carrier SMS charges may apply" />
     </LinearLayout>
 
