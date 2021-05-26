@@ -43,8 +43,8 @@
         android:backgroundTintMode="src_atop"
         android:drawableStart="@drawable/ic_smartphone"
         android:drawablePadding="12dp"
-        android:ems="8"
-        android:hint="+923084306366"
+        android:ems="10"
+        android:hint="+92XXXXXXXXXX"
         android:textColorHint="@color/grey"
         android:inputType="phone"
         android:textColor="@color/black" />
