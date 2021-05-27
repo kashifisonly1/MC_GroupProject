@@ -1,6 +1,7 @@
 package com.mcgroupproject.whatsappclone.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.mcgroupproject.whatsappclone.R;
+import com.mcgroupproject.whatsappclone.activity_message;
 import com.mcgroupproject.whatsappclone.model.ChatList;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
@@ -56,6 +58,15 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.Holder
             lastMessage = itemView.findViewById(R.id.last_message);
             //date = itemView.findViewById(R.id.lastMessageDate);
             profilePic = itemView.findViewById(R.id.profile_picture_chatlist);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, activity_message.class);
+                    intent.putExtra("username",name.getText());
+                    intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 }

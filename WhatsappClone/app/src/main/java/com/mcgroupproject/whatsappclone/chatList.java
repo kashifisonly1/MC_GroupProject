@@ -33,9 +33,4 @@ public class chatList extends AppCompatActivity {
         list.add(new ChatList("4","Usama","Ok, see you soon","1/2/15","https://scontent.fmux2-1.fna.fbcdn.net/v/t1.18169-9/29512375_643250086007886_4191629906057832412_n.jpg?_nc_cat=100&ccb=1-3&_nc_sid=09cbfe&_nc_eui2=AeEUliQjauMykU40e9sFWwyluBDgPY8vDYq4EOA9jy8NijRpaoDFIsq_0b1OSRqb1obl-t_XAuMZJlLidsLqJWYd&_nc_ohc=_r1-hlDH9QsAX9DdIQY&_nc_ht=scontent.fmux2-1.fna&oh=662d9e9ff60cf2523b5a2d3009b1f1a6&oe=60D64A39"));
         recyclerView.setAdapter(new ChatListAdapter(list,this));
     }
-    public void openChatPage()
-    {
-        Intent intent = new Intent(getBaseContext(), activity_message.class);
-        startActivity(intent);
-    }
 }

@@ -2,7 +2,6 @@ package com.mcgroupproject.whatsappclone;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -11,8 +10,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,11 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
-import com.mcgroupproject.whatsappclone.adapter.ChatListAdapter;
-import com.mcgroupproject.whatsappclone.model.ChatList;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
@@ -56,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(getBaseContext(), SignupPage.class);
             startActivity(intent);
         }
-        TextView textView = findViewById(R.id.name);
+        TextView textView = findViewById(R.id.receiver);
         textView.setText("Welcome, " + mAuth.getCurrentUser().getDisplayName());
         db.getReference().child("users").child(mAuth.getUid()).child("Status").setValue("online").addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

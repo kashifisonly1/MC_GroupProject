@@ -12,8 +12,6 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
                     android:background="#4DC8C8C8"
-                    android:clickable="true"
-                    android:onClick="openChatPage"
                     android:orientation="horizontal">
 
                     <com.mikhaellopez.circularimageview.CircularImageView
