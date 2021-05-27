@@ -75,7 +75,7 @@ public class ProfileCreationPage extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                    Intent intent = new Intent(getBaseContext(), chatList.class);
                     startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(), "Could not update data", Toast.LENGTH_LONG).show();

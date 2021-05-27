@@ -11,6 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -21,7 +23,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
+import com.mcgroupproject.whatsappclone.adapter.ChatListAdapter;
+import com.mcgroupproject.whatsappclone.model.ChatList;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
         if(Firebase.auth==null)
             Firebase.init();
         mAuth = Firebase.auth;
@@ -100,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+
     public void signout(View view) {
         mAuth.signOut();
         Intent intent = new Intent(getBaseContext(), SignupPage.class);
@@ -153,5 +164,4 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
     }
-
 }

@@ -12,8 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".new_group"/>
-        <activity android:name=".profile"/>
+        <activity android:name=".chatList"></activity>
+        <activity android:name=".new_group" />
+        <activity android:name=".profile" />
         <activity android:name=".settings" />
         <activity android:name=".search" />
         <activity android:name=".activity_new_message" />

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,111 +7,50 @@
     android:background="@color/white"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <ScrollView
-            android:id="@+id/scrollView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="88dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <Button
-                    android:id="@+id/button4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Sign out"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/name"
-                    android:onClick="signout" />
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Sign out"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name"
+        android:onClick="signout" />
 
 
-                    <TextView
-                        android:id="@+id/name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="HELLO USER"
-                        android:textColor="@color/black"/>
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="HELLO USER"
+        android:textColor="@color/black"/>
 
-                    <EditText
-                        android:id="@+id/search_user"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="16dp"
-                        android:ems="10"
-                        android:inputType="textPersonName"
-                        android:text="Search User"
-                        android:textColor="@color/black"
-                        android:backgroundTint="@color/black"/>
+    <EditText
+        android:id="@+id/search_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Search User"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/black"/>
 
-                    <Button
-                        android:id="@+id/button6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="Search"
-                        app:layout_constraintStart_toEndOf="@+id/search_user"
-                        app:layout_constraintTop_toTopOf="@+id/search_user"
-                        android:onClick="searchUser"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="#4DC8C8C8"
-                    android:orientation="horizontal">
-
-                    <com.mikhaellopez.circularimageview.CircularImageView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:src="@drawable/sample"
-                        app:civ_border_color="@color/violet"
-                        app:civ_border_width="4dp"
-                        app:civ_shadow="true"
-                        app:civ_shadow_color="@color/violet"
-                        app:civ_shadow_radius="10dp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/profile_fname_label"
-                            android:layout_width="match_parent"
-                            android:layout_height="49dp"
-                            android:paddingTop="10dp"
-                            android:text="Name"
-                            android:textColor="@color/black"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/textView15"
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:textColor="@color/grey"
-                            android:text="this is the first message. this is my first message. this is..."
-                            android:textSize="16sp" />
-                    </LinearLayout>
-                </LinearLayout>
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Search"
+        app:layout_constraintStart_toEndOf="@+id/search_user"
+        app:layout_constraintTop_toTopOf="@+id/search_user"
+        android:onClick="searchUser"/>
 
 
-            </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bnv"
@@ -122,4 +61,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/items_menu" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -13,17 +13,17 @@
         android:enabled="true"
         android:icon="@drawable/ic_new_message"
         android:title="@string/new_message"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_search"
         android:enabled="true"
         android:icon="@drawable/ic_search"
         android:title="@string/search"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_settings"
         android:enabled="true"
         android:icon="@drawable/ic_setting"
         android:title="@string/setting"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom"/>
 </menu>
