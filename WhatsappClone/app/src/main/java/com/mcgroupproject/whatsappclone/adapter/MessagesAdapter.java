@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -36,23 +37,23 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Holder
         Message message = list.get(position);
         holder.text.setText(message.getText());
         holder.time.setText(message.getTime());
-        String sent ="";
-        String delivered ="";
-        String seen ="";
-        String notSent ="";
+        String sent ="@drawable/message_sent";
+        String delivered ="@drawable/message_delivered";
+        String seen ="@drawable/message_seen";
+        String notSent ="@drawable/message_not_sent";
         switch (message.getStatus())
         {
             case 1:
-                Glide.with(context).load(seen).into(holder.img);
+                holder.img.setImageResource(R.drawable.message_not_sent);
                 break;
             case 2:
-                Glide.with(context).load(delivered).into(holder.img);
+                holder.img.setImageResource(R.drawable.message_sent);
                 break;
             case 3:
-                Glide.with(context).load(sent).into(holder.img);
+                holder.img.setImageResource(R.drawable.message_delivered);
                 break;
             case 4:
-                Glide.with(context).load(notSent).into(holder.img);
+                holder.img.setImageResource(R.drawable.message_seen);
                 break;
         }
     }
@@ -64,7 +65,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Holder
 
     public class Holder extends RecyclerView.ViewHolder {
         private TextView text,time;
-        CircularImageView img;
+        ImageView img;
         public Holder(@NonNull View itemView) {
             super(itemView);
             text= itemView.findViewById(R.id.message_text);

@@ -34,10 +34,10 @@ public class activity_message extends Activity {
 
     private void getMessagesList() {
 
-            messageList.add(new Message("1","1","1","this is first message",1,"12:30AM","1/1/21","1","s1","r1","rep1"));
-            messageList.add(new Message("2","2","2","this is second message",2,"01:23AM","2/3/21","2","s2","r2","rep2"));
-            messageList.add(new Message("3","3","3","this is third message",3,"03:43PM","3/23/21","3","s3","r3","rep3"));
-            messageList.add(new Message("4","4","4","this is fourth message",4,"12:00AM","4/12/21","4","s4","r4","rep4"));
+            messageList.add(new Message("1","1","1","this message is not yet sent",1,"12:30AM","1/1/21","1","s1","r1","rep1"));
+            messageList.add(new Message("2","2","2","this message sent",2,"01:23AM","2/3/21","2","s2","r2","rep2"));
+            messageList.add(new Message("3","3","3","this message delivered",3,"03:43PM","3/23/21","3","s3","r3","rep3"));
+            messageList.add(new Message("4","4","4","this is is seen by the receiver",4,"12:00AM","4/12/21","4","s4","r4","rep4"));
             recyclerView.setAdapter(new MessagesAdapter(messageList, this));
     }
 }
