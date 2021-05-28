@@ -1,12 +1,15 @@
 package com.mcgroupproject.whatsappclone;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mcgroupproject.whatsappclone.adapter.ChatListAdapter;
 import com.mcgroupproject.whatsappclone.model.ChatList;
 
@@ -25,6 +28,41 @@ public class chatList extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         getChatList();
+
+        BottomNavigationView bnv = findViewById(R.id.bnv);
+        bnv.setSelectedItemId(R.id.action_chat);
+
+        bnv.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent intent;
+                switch (item.getItemId())
+                {
+                    case R.id.action_chat:
+                        intent = new Intent(getBaseContext(), chatList.class);
+                        overridePendingTransition(0,0);;
+                        startActivity(intent);
+                        return true;
+                    case R.id.action_new_message:
+                        intent = new Intent(getBaseContext(), activity_new_message.class);
+                        overridePendingTransition(0,0);;
+                        startActivity(intent);
+                        return true;
+                    case R.id.action_search:
+                        intent = new Intent(getBaseContext(), search.class);
+                        overridePendingTransition(0,0);;
+                        startActivity(intent);
+                        return true;
+                    case R.id.action_settings:
+                        intent = new Intent(getBaseContext(), settings.class);
+                        overridePendingTransition(0,0);;
+                        startActivity(intent);
+                        return true;
+                }
+                return false;
+            }
+        });
+
     }
     private void getChatList() {
         list.add(new ChatList("1","Kashif","Ok, see you soon","1/2/12","https://scontent.fmux2-1.fna.fbcdn.net/v/t1.6435-1/p200x200/155014352_2779390632322575_6048001805041938144_n.jpg?_nc_cat=108&ccb=1-3&_nc_sid=7206a8&_nc_eui2=AeFl8FcrooFFhysgjhcl7tAYqDfDwlXjA1OoN8PCVeMDU70k5t9Wijg2rsnW-Yk1tAQ2jP_FuoLBHIDkCew8gmNp&_nc_ohc=HZk3qhB7R8QAX8bSkMI&tn=wC49WAlqcaojgb8w&_nc_ht=scontent.fmux2-1.fna&tp=6&oh=696d4ce6498d68dff3fa2b4c4e326d8e&oe=60D45842"));
