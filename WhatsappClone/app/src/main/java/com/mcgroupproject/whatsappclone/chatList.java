@@ -29,39 +29,39 @@ public class chatList extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         getChatList();
 
-        BottomNavigationView bnv = findViewById(R.id.bnv);
-        bnv.setSelectedItemId(R.id.action_chat);
-
-        bnv.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Intent intent;
-                switch (item.getItemId())
-                {
-                    case R.id.action_chat:
-                        intent = new Intent(getBaseContext(), chatList.class);
-                        overridePendingTransition(0,0);;
-                        startActivity(intent);
-                        return true;
-                    case R.id.action_new_message:
-                        intent = new Intent(getBaseContext(), activity_new_message.class);
-                        overridePendingTransition(0,0);;
-                        startActivity(intent);
-                        return true;
-                    case R.id.action_search:
-                        intent = new Intent(getBaseContext(), search.class);
-                        overridePendingTransition(0,0);;
-                        startActivity(intent);
-                        return true;
-                    case R.id.action_settings:
-                        intent = new Intent(getBaseContext(), settings.class);
-                        overridePendingTransition(0,0);;
-                        startActivity(intent);
-                        return true;
-                }
-                return false;
-            }
-        });
+//        BottomNavigationView bnv = findViewById(R.id.bnv);
+//        bnv.setSelectedItemId(R.id.action_chat);
+//
+//        bnv.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                Intent intent;
+//                switch (item.getItemId())
+//                {
+//                    case R.id.action_chat:
+//                        intent = new Intent(getBaseContext(), chatList.class);
+//                        overridePendingTransition(0,0);;
+//                        startActivity(intent);
+//                        return true;
+//                    case R.id.action_new_message:
+//                        intent = new Intent(getBaseContext(), activity_new_message.class);
+//                        overridePendingTransition(0,0);;
+//                        startActivity(intent);
+//                        return true;
+//                    case R.id.action_search:
+//                        intent = new Intent(getBaseContext(), search.class);
+//                        overridePendingTransition(0,0);;
+//                        startActivity(intent);
+//                        return true;
+//                    case R.id.action_settings:
+//                        intent = new Intent(getBaseContext(), settings.class);
+//                        overridePendingTransition(0,0);;
+//                        startActivity(intent);
+//                        return true;
+//                }
+//                return false;
+//            }
+//        });
 
     }
     private void getChatList() {

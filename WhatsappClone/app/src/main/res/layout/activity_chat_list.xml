@@ -19,14 +19,14 @@
         android:layout_gravity="bottom"
         android:gravity="bottom">
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bnv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@color/white"
-            android:foregroundGravity="bottom"
-            app:menu="@menu/items_menu" />
+<!--        <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--            android:id="@+id/bnv"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="bottom"-->
+<!--            android:background="@color/white"-->
+<!--            android:foregroundGravity="bottom"-->
+<!--            app:menu="@menu/items_menu" />-->
     </LinearLayout>
 
 
