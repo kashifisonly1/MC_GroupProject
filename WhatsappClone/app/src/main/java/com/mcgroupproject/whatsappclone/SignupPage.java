@@ -1,9 +1,14 @@
 package com.mcgroupproject.whatsappclone;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -30,9 +35,30 @@ public class SignupPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_page);
-        mAuth = Firebase.auth;
-    }
 
+        mAuth = Firebase.auth;
+
+    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void ShowNotification(View view) {
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            notificationManager.createNotificationChannel(new NotificationChannel("channel_01",
+                    "Whatever", NotificationManager.IMPORTANCE_DEFAULT));
+        // Create a notification and set the notification channel.
+
+    }
+        Notification notification = new Notification.Builder(SignupPage.this)
+                .setContentTitle("New Message")
+                .setContentText("You've received new messages.")
+                .setSmallIcon(R.drawable.ic_chats)
+                .build();
+
+
+
+        notificationManager.notify(1, notification);
+    }
     public void sendVerificationCode(View view){
         EditText phone = findViewById(R.id.phoneField);
         String phoneNumber = phone.getText().toString();
@@ -79,5 +105,6 @@ public class SignupPage extends AppCompatActivity {
             intent.putExtra("phoneNumber",phoneNumber);
             startActivity(intent);
         }
+
     };
 }
