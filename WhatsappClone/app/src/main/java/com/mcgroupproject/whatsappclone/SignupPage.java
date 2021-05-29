@@ -1,9 +1,17 @@
 package com.mcgroupproject.whatsappclone;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.Person;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -22,6 +30,8 @@ import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.concurrent.TimeUnit;
 
+import io.grpc.internal.SharedResourceHolder;
+
 public class SignupPage extends AppCompatActivity {
 
     FirebaseAuth mAuth;
@@ -30,7 +40,34 @@ public class SignupPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_page);
+
         mAuth = Firebase.auth;
+
+    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void ShowNotification(View view) {
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            notificationManager.createNotificationChannel(new NotificationChannel("channel_01",
+                    "Whatever", NotificationManager.IMPORTANCE_HIGH));
+            // Create a notification and set the notification channel.
+
+        }
+        Long tsLong = System.currentTimeMillis()/1000;
+        Notification.MessagingStyle.Message message1 =
+                new Notification.MessagingStyle.Message("asdasd",tsLong,"asdasda");
+        Notification.MessagingStyle.Message message2 =
+                new Notification.MessagingStyle.Message("12ssasadd",tsLong,"asdasd");
+        android.app.Notification notification = new android.app.Notification.Builder(SignupPage.this)
+                .setSmallIcon(R.drawable.ic_logo_p).setColor(Color.argb(1,206,0,219))
+                .setStyle(new Notification.MessagingStyle("asdasd")
+                        .addMessage(message1)
+                .addMessage(message2))
+                .build();
+
+
+        notificationManager.notify(1, notification);
     }
 
     public void sendVerificationCode(View view){
@@ -79,5 +116,6 @@ public class SignupPage extends AppCompatActivity {
             intent.putExtra("phoneNumber",phoneNumber);
             startActivity(intent);
         }
+
     };
 }
