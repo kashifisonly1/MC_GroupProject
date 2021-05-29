@@ -3,11 +3,14 @@ package com.mcgroupproject.whatsappclone;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.Person;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -27,6 +30,8 @@ import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.concurrent.TimeUnit;
 
+import io.grpc.internal.SharedResourceHolder;
+
 public class SignupPage extends AppCompatActivity {
 
     FirebaseAuth mAuth;
@@ -45,20 +50,26 @@ public class SignupPage extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
             notificationManager.createNotificationChannel(new NotificationChannel("channel_01",
-                    "Whatever", NotificationManager.IMPORTANCE_DEFAULT));
-        // Create a notification and set the notification channel.
+                    "Whatever", NotificationManager.IMPORTANCE_HIGH));
+            // Create a notification and set the notification channel.
 
-    }
-        Notification notification = new Notification.Builder(SignupPage.this)
-                .setContentTitle("New Message")
-                .setContentText("You've received new messages.")
-                .setSmallIcon(R.drawable.ic_chats)
+        }
+        Long tsLong = System.currentTimeMillis()/1000;
+        Notification.MessagingStyle.Message message1 =
+                new Notification.MessagingStyle.Message("asdasd",tsLong,"asdasda");
+        Notification.MessagingStyle.Message message2 =
+                new Notification.MessagingStyle.Message("12ssasadd",tsLong,"asdasd");
+        android.app.Notification notification = new android.app.Notification.Builder(SignupPage.this)
+                .setSmallIcon(R.drawable.ic_logo_p).setColor(Color.argb(1,206,0,219))
+                .setStyle(new Notification.MessagingStyle("asdasd")
+                        .addMessage(message1)
+                .addMessage(message2))
                 .build();
-
 
 
         notificationManager.notify(1, notification);
     }
+
     public void sendVerificationCode(View view){
         EditText phone = findViewById(R.id.phoneField);
         String phoneNumber = phone.getText().toString();
