@@ -45,25 +45,6 @@
             android:textColor="@color/black"
             android:textColorLink="#8F00B7" />
 
-        <TextView
-            android:id="@+id/profile_lname_label"
-            android:layout_width="match_parent"
-            android:layout_height="49dp"
-            android:paddingTop="10dp"
-            android:text="Phone"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/profile_lname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Phone"
-            android:inputType="phone"
-            android:textColorLink="#8F00B7" />
-
         <Button
             android:id="@+id/profile_btn_create"
             android:layout_width="wrap_content"

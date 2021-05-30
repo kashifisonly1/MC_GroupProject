@@ -29,7 +29,6 @@ public class chatList extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         getChatList();
 
-        
 //        BottomNavigationView bnv = findViewById(R.id.bnv);
 //        bnv.setSelectedItemId(R.id.action_chat);
 //

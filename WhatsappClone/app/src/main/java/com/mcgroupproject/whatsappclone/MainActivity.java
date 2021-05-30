@@ -11,6 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -22,6 +24,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
+import com.mcgroupproject.whatsappclone.Fragments.MainFragment;
 
 import java.util.Map;
 
@@ -33,10 +36,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
-
         if(Firebase.auth==null)
             Firebase.init();
         mAuth = Firebase.auth;
@@ -52,14 +51,13 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(getBaseContext(), SignupPage.class);
             startActivity(intent);
         }
-        TextView textView = findViewById(R.id.receiver);
-        textView.setText("Welcome, " + mAuth.getCurrentUser().getDisplayName());
         db.getReference().child("users").child(mAuth.getUid()).child("Status").setValue("online").addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
 
             }
         });
+
         db.getReference().child("users").child(mAuth.getUid()).child("Status").onDisconnect().setValue(ServerValue.TIMESTAMP.toString());
         DatabaseReference recRev = db.getReference("messages/"+mAuth.getUid());
         recRev.keepSynced(true);
@@ -105,12 +103,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
-
-    public void signout(View view) {
-        mAuth.signOut();
-        Intent intent = new Intent(getBaseContext(), SignupPage.class);
-        startActivity(intent);
+    @Override
+    protected void onStart() {
+        super.onStart();
+        MainFragment fragment1 = new MainFragment();
+        FragmentTransaction transaction =getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_chatlist, fragment1);
+        transaction.commit();
     }
 
     public void searchUser(View view) {
