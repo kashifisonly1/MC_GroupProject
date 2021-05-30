@@ -5,12 +5,13 @@ public class ChatList {
     private String username;
     private String lastMessage;
     private String Date;
+    private String Phone;
     private String urlProfile;
 
     public ChatList() {
     }
 
-    public ChatList(String userID, String username, String lastMessage, String date, String urlProfile) {
+    public ChatList(String userID,String phone, String username, String lastMessage, String date, String urlProfile) {
         this.userID = userID;
         this.username = username;
         this.lastMessage = lastMessage;
@@ -56,5 +57,13 @@ public class ChatList {
 
     public void setUrlProfile(String urlProfile) {
         this.urlProfile = urlProfile;
+    }
+
+    public String getPhone() {
+        return Phone;
+    }
+
+    public void setPhone(String phone) {
+        Phone = phone;
     }
 }

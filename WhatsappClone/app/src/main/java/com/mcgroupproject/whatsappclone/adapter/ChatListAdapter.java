@@ -61,9 +61,12 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.Holder
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    ChatList user = list.get(getAdapterPosition());
                     Intent intent = new Intent(context, activity_message.class);
                     intent.putExtra("username",name.getText());
-                    //intent.putExtra("profileUrl",chatList.getUrlProfile());
+                    intent.putExtra("image", user.getUrlProfile());
+                    intent.putExtra("phone", user.getPhone());
+                    intent.putExtra("uid", user.getUserID());
                     intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 }
