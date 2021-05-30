@@ -2,6 +2,7 @@ package com.mcgroupproject.whatsappclone;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -25,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.mcgroupproject.whatsappclone.Fragments.MainFragment;
+import com.mcgroupproject.whatsappclone.Fragments.ProfileFragment;
 
 import java.util.Map;
 
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseDatabase db;
     FirebaseAuth mAuth;
+    private String current_frame = "chatlist";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        current_frame="chatlist";
         MainFragment fragment1 = new MainFragment();
         FragmentTransaction transaction =getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.main_chatlist, fragment1);
@@ -158,5 +162,29 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    public void profileFunction(MenuItem item) {
+        if(current_frame=="profile")
+            return;
+        current_frame = "profile";
+        ProfileFragment fragment1 = new ProfileFragment();
+        FragmentTransaction transaction =getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_chatlist, fragment1);
+        transaction.commit();
+    }
+    public void logoutFunction(MenuItem item)
+    {
+        mAuth.signOut();
+        recreate();
+    }
+    public void chatlistFunction(MenuItem item) {
+        if(current_frame=="chatlist")
+            return;
+        current_frame = "chatlist";
+        MainFragment fragment1 = new MainFragment();
+        FragmentTransaction transaction =getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_chatlist, fragment1);
+        transaction.commit();
     }
 }
