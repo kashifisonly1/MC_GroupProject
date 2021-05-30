@@ -77,6 +77,7 @@ public class ProfileCreationPage extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     Intent intent = new Intent(getBaseContext(), MainActivity.class);
                     startActivity(intent);
+                    finish();
                 } else {
                     Toast.makeText(getApplicationContext(), "Could not update data", Toast.LENGTH_LONG).show();
                 }

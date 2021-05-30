@@ -51,6 +51,7 @@ public class CodeVerificationPage extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Intent intent = new Intent(getBaseContext(), ProfileCreationPage.class);
                             startActivity(intent);
+                            finish();
                         } else {
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 EditText codeField = findViewById(R.id.codeField);
@@ -61,4 +62,7 @@ public class CodeVerificationPage extends AppCompatActivity {
                 });
     }
 
+    public void backToSignupPage(View view) {
+        finish();
+    }
 }

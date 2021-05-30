@@ -157,6 +157,7 @@ public class SignupPage extends AppCompatActivity {
         public void onVerificationCompleted(PhoneAuthCredential credential) {
             Intent intent = new Intent(getBaseContext(), ProfileCreationPage.class);
             startActivity(intent);
+            finish();
         }
 
         @Override

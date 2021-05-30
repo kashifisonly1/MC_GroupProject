@@ -49,10 +49,12 @@ public class MainActivity extends AppCompatActivity {
         catch (Exception e){
 
         }
-        if(mAuth.getCurrentUser()==null)
+        if(mAuth.getCurrentUser()==null || (mAuth.getUid().equals(null)))
         {
             Intent intent = new Intent(getBaseContext(), SignupPage.class);
             startActivity(intent);
+            finish();
+            return;
         }
         db.getReference().child("users").child(mAuth.getUid()).child("Status").setValue("online").addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -68,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                     MessageModel msg = snapshot.getValue(MessageModel.class);
-                    System.out.println(msg.toString());
                     Toast.makeText(getApplicationContext(), msg.toString(),Toast.LENGTH_LONG).show();
                     if(msg.type==null)
                         msg.type="";
@@ -87,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                System.out.println("2");
             }
 
             @Override
@@ -144,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("name", user.get("Name"));
                     intent.putExtra("status", user.get("Status"));
                     startActivity(intent);
+                    finish();
                 }
             }
         });
