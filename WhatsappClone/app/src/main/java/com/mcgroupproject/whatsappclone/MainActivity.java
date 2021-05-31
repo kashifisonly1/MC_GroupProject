@@ -1,7 +1,9 @@
 package com.mcgroupproject.whatsappclone;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import com.mcgroupproject.whatsappclone.database.*;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -27,14 +30,24 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.mcgroupproject.whatsappclone.Fragments.MainFragment;
 import com.mcgroupproject.whatsappclone.Fragments.ProfileFragment;
+import com.mcgroupproject.whatsappclone.model.Message;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
+import java.util.EventListener;
+import java.util.Locale;
 import java.util.Map;
+
 
 public class MainActivity extends AppCompatActivity {
 
     FirebaseDatabase db;
     FirebaseAuth mAuth;
+    ChildEventListener listener;
+    DatabaseReference recRev;
     private String current_frame = "chatlist";
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,28 +75,37 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        db.getReference().child("users").child(mAuth.getUid()).child("Status").onDisconnect().setValue(ServerValue.TIMESTAMP.toString());
-        DatabaseReference recRev = db.getReference("messages/"+mAuth.getUid());
+        long time = Instant.now().toEpochMilli();
+        db.getReference().child("users").child(mAuth.getUid()).child("Status").onDisconnect().setValue(Long.toString(time));
+        recRev = db.getReference("messages/"+mAuth.getUid());
         recRev.keepSynced(true);
-        recRev.addChildEventListener(new ChildEventListener() {
+        listener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    MessageModel msg = snapshot.getValue(MessageModel.class);
-                    Toast.makeText(getApplicationContext(), msg.toString(),Toast.LENGTH_LONG).show();
-                    if(msg.type==null)
-                        msg.type="";
-                    if(msg.type.equals("message"))
-                    {
-                        String sender = msg.sender;
-                        MessageModel newMSG = new MessageModel();
-                        newMSG.msg = "delivered";
-                        newMSG.type = "ack";
-                        newMSG.msgID = msg.msgID;
-                        newMSG.sender = mAuth.getUid();
-                        newMSG.time = 912345;
-                        sendAcknowledge(newMSG, sender);
-                    }
+                MessageModel msg = snapshot.getValue(MessageModel.class);
+                if(msg.type==null)
+                    msg.type="";
+                if(msg.type.equals("message"))
+                {
+                    Date date = new Date(msg.time);
+                    SimpleDateFormat sdf = new SimpleDateFormat("EEEE,MMMM d,yyyy", Locale.ENGLISH);
+                    SimpleDateFormat tdf = new SimpleDateFormat(" h:mm,a", Locale.ENGLISH);
+                    String timeVal = tdf.format(date);
+                    String dateVal = sdf.format(date);
+                    Message m=new Message(msg.msgID, msg.sender, mAuth.getUid(), msg.msg, 2, timeVal, dateVal, null, null, null, null);
+                    MessageDB.Add(m);
+                    String sender = msg.sender;
+                    MessageModel newMSG = new MessageModel();
+                    newMSG.msg = "3";
+                    newMSG.type = "ack";
+                    newMSG.msgID = msg.msgID;
+                    newMSG.sender = mAuth.getUid();
+                    newMSG.time = 912345;
+                    sendAcknowledge(newMSG, sender);
+                }
+                else{
+                    MessageDB.Update(msg.msgID, msg.msg);
+                }
             }
 
             @Override
@@ -103,7 +125,8 @@ public class MainActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        };
+        recRev.addChildEventListener(listener);
     }
 
     @Override
@@ -114,6 +137,12 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction =getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.main_chatlist, fragment1);
         transaction.commit();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        recRev.removeEventListener(listener);
     }
 
     public void searchUser(View view) {
@@ -137,8 +166,6 @@ public class MainActivity extends AppCompatActivity {
                     String key = map.keySet().iterator().next();
                     Map<String, String> user = map.get(key);
                     System.out.println(user);
-                   // for(DataSnapshot d:task.getResult().getChildren())
-                     //   user = d.getValue(User.class);
                     intent.putExtra("phone", user.get("Phone"));
                     intent.putExtra("uid", user.get("UID"));
                     intent.putExtra("name", user.get("Name"));
@@ -149,16 +176,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    public void sendAcknowledge(MessageModel msg, String ID) {
+    public void sendAcknowledge(final MessageModel msg, String ID) {
         db.getReference("messages/"+ID).push().setValue(msg).addOnCompleteListener(
                 new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(getApplicationContext(), "Acknowledge Sent", Toast.LENGTH_LONG).show();
+                            MessageDB.Update(msg.msgID, msg.msg);
                         }
                         else{
-                            Toast.makeText(getApplicationContext(), "Acknowledge NOT Sent", Toast.LENGTH_LONG).show();
                         }
                     }
                 }

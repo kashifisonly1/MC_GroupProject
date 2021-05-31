@@ -5,7 +5,7 @@ public class MessageModel {
     public String msg;
     public String type;
     public String msgID;
-    public int time;
+    public long time;
     public MessageModel(){}
 
     @Override
