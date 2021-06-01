@@ -9,7 +9,7 @@ public class MessageDB {
     public static final List<Message> list = new ArrayList<>();
     public static void Add(Message i)
     {
-        for(int a =0; a<list.size(); a++)
+        for(int a = 0; a<list.size(); a++)
         {
             if(list.get(a).getId().equals(i.getId()))
                 return;
