@@ -17,8 +17,10 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/creation_page_img"
             android:layout_width="200dp"
             android:layout_height="200dp"
+            android:onClick="upload_file"
             android:src="@drawable/sample"
             app:civ_border_color="#DDDDDD"
             app:civ_border_width="1dp"

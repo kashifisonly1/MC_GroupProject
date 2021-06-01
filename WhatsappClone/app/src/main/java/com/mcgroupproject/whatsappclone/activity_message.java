@@ -1,10 +1,12 @@
 package com.mcgroupproject.whatsappclone;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,7 +16,9 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -23,6 +27,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.mcgroupproject.whatsappclone.adapter.MessagesAdapter;
 import com.mcgroupproject.whatsappclone.database.MessageDB;
 import com.mcgroupproject.whatsappclone.model.Message;
@@ -44,6 +49,8 @@ public class activity_message extends Activity {
     TextView online_statusView;
     TextView nameView;
     EditText msgBox;
+    ImageView img;
+    FirebaseStorage storage;
     ChildEventListener listener;
     DatabaseReference recRev;
     private RecyclerView recyclerView;
@@ -56,8 +63,16 @@ public class activity_message extends Activity {
             setContentView(R.layout.activity_message);
             db = Firebase.db;
             mAuth = Firebase.auth;
+            storage=Firebase.storage;
+            img = findViewById(R.id.profile_image_link);
             phone = getIntent().getStringExtra("phone");
             id = getIntent().getStringExtra("uid");
+            storage.getReference().child("profile/"+ id).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Glide.with(getApplicationContext()).load(uri.toString()).into(img);
+                }
+            });
             nameView = findViewById(R.id.chat_name);
             online_statusView = findViewById(R.id.status);
             online_statusView.setText("loading...");

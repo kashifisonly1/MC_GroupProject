@@ -2,6 +2,7 @@ package com.mcgroupproject.whatsappclone.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.mcgroupproject.whatsappclone.Firebase;
 import com.mcgroupproject.whatsappclone.R;
 import com.mcgroupproject.whatsappclone.activity_message;
 import com.mcgroupproject.whatsappclone.model.ChatList;
@@ -21,7 +27,7 @@ import java.util.List;
 public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.Holder> {
     private List<ChatList> list;
     private Context context;
-
+    private FirebaseStorage storage;
     public ChatListAdapter(List<ChatList> list, Context context) {
         this.list = list;
         this.context = context;
@@ -36,12 +42,18 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.Holder
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
+        storage = Firebase.storage;
         ChatList chatList = list.get(position);
         holder.name.setText(chatList.getUsername());
         holder.lastMessage.setText((chatList.getLastMessage()));
         //holder.date.setText(chatList.getDate());
+        storage.getReference().child("profile/"+chatList.getUserID()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(context).load(uri.toString()).into(holder.profilePic);
+            }
+        });
 
-        Glide.with(context).load(chatList.getUrlProfile()).into(holder.profilePic);
     }
     @Override
     public int getItemCount() {

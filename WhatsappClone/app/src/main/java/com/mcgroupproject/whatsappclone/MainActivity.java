@@ -1,13 +1,27 @@
 package com.mcgroupproject.whatsappclone;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageException;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.mcgroupproject.whatsappclone.Utils.FileHandler;
 import com.mcgroupproject.whatsappclone.database.*;
+
+import android.os.FileUtils;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +47,12 @@ import com.mcgroupproject.whatsappclone.Fragments.ProfileFragment;
 import com.mcgroupproject.whatsappclone.model.ChatList;
 import com.mcgroupproject.whatsappclone.model.Message;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
@@ -48,7 +68,8 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     ChildEventListener listener;
     DatabaseReference recRev;
-    private String current_frame = "chatlist";
+    FirebaseStorage storage;
+    private String current_frame = "";
     private MainFragment chatFragment;
     private List<ChatList> usersList;
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -60,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
             Firebase.init();
         mAuth = Firebase.auth;
         db = Firebase.db;
+        storage = Firebase.storage;
         try{
             db.setPersistenceEnabled(true);
         }
@@ -172,11 +194,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        current_frame="chatlist";
-        MainFragment fragment1 = chatFragment;
-        FragmentTransaction transaction =getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.main_chatlist, fragment1);
-        transaction.commit();
+        if(current_frame.equals("")) {
+            current_frame = "chatlist";
+            MainFragment fragment1 = chatFragment;
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.main_chatlist, fragment1);
+            transaction.commit();
+        }
     }
 
     @Override
@@ -246,6 +270,28 @@ public class MainActivity extends AppCompatActivity {
         mAuth.signOut();
         finish();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==100&&resultCode==RESULT_OK&&data!=null)
+        {
+            System.out.println("-----------------------");
+            Uri filePath = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), filePath);
+                ((ImageView)findViewById(R.id.profile_img)).setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     public void chatlistFunction(MenuItem item) {
         if(current_frame.equals("chatlist"))
             return;
@@ -255,4 +301,5 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.main_chatlist, fragment1);
         transaction.commit();
     }
+
 }
