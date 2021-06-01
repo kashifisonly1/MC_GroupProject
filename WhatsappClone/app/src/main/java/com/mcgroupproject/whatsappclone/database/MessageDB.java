@@ -26,6 +26,8 @@ public class MessageDB {
         {
             if(list.get(a).getId().equals(id))
             {
+                if((list.get(a).getStatus())>=Integer.parseInt(status))
+                    return;
                 list.get(a).setStatus(Integer.parseInt(status));
                 return;
             }
