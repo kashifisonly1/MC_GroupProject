@@ -43,7 +43,6 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.Holder
 
         Glide.with(context).load(chatList.getUrlProfile()).into(holder.profilePic);
     }
-
     @Override
     public int getItemCount() {
         return list.size();

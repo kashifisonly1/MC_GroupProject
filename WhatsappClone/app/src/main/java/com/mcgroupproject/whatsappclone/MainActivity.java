@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
             finish();
             return;
         }
+        usersList = Users.Get();
+        chatFragment = new MainFragment(usersList);
         db.getReference().child("users").child(mAuth.getUid()).child("Status").setValue("online").addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -101,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                     if(userID==-1)
                     {
                         db.getReference("users/"+msg.sender).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                            @Override
+                                @Override
                             public void onComplete(@NonNull Task<DataSnapshot> task) {
                                 if(task.isSuccessful())
                                 {
@@ -119,8 +121,9 @@ public class MainActivity extends AppCompatActivity {
                     else{
                         for(int i =0; i<usersList.size(); i++) {
                             ChatList user = usersList.get(i);
+                            System.out.println(Long.parseLong(user.getDate()));
                             if (user.getUserID().equals(msg.sender)) {
-                                if (Long.getLong(user.getDate()) < msg.time) {
+                                if (Long.parseLong(user.getDate()) < msg.time) {
                                     user.setLastMessage(msg.msg);
                                     user.setDate(Long.toString(msg.time));
                                 }
@@ -170,9 +173,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         current_frame="chatlist";
-        usersList = Users.Get();
-        MainFragment fragment1 = new MainFragment(usersList);
-        chatFragment = fragment1;
+        MainFragment fragment1 = chatFragment;
         FragmentTransaction transaction =getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.main_chatlist, fragment1);
         transaction.commit();
@@ -243,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
     public void logoutFunction(MenuItem item)
     {
         mAuth.signOut();
-        recreate();
+        finish();
     }
     public void chatlistFunction(MenuItem item) {
         if(current_frame.equals("chatlist"))

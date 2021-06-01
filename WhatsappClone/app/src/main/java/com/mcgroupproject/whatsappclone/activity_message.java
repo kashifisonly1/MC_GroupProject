@@ -154,7 +154,8 @@ public class activity_message extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        recRev.removeEventListener(listener);
+        if(recRev!=null && listener!=null)
+            recRev.removeEventListener(listener);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

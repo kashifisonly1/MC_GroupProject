@@ -22,6 +22,7 @@ public class MainFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<ChatList> list;
     private ChatListAdapter adapter;
+    public MainFragment(){this.list=new ArrayList<>();}
     public MainFragment(List<ChatList> list) {
         this.list=list;
     }
@@ -44,7 +45,7 @@ public class MainFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
     private void getChatList() {
-        adapter = new ChatListAdapter(list,getContext());
-        recyclerView.setAdapter(adapter);
+            adapter = new ChatListAdapter(list,getContext());
+            recyclerView.setAdapter(adapter);
     }
 }

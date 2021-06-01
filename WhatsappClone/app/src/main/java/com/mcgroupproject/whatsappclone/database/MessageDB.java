@@ -33,6 +33,15 @@ public class MessageDB {
             }
         }
     }
+    public static List<Message> GetAllUnsendMessages()
+    {
+        return null;
+    }
+    public static List<Message> GetAllNotSeenMessages(String uid)
+    {
+        // load all messages whose sender is uid and status != 4
+        return null;
+    }
     public static List<Message> Get(String uid)
     {
         List<Message> l = new ArrayList<>();
@@ -44,7 +53,6 @@ public class MessageDB {
                 l.add(m);
             }
         }
-
         return l;
     }
 }

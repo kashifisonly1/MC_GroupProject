@@ -161,6 +161,12 @@ public class SignupPage extends AppCompatActivity {
         }
 
         @Override
+        public void onCodeAutoRetrievalTimeOut(@NonNull String s) {
+            super.onCodeAutoRetrievalTimeOut(s);
+            Toast toast = Toast.makeText(getApplicationContext(), "CODE TIMEOUT", Toast.LENGTH_LONG);
+        }
+
+        @Override
         public void onVerificationFailed(FirebaseException e) {
             if (e instanceof FirebaseAuthInvalidCredentialsException) {
                 Toast toast = Toast.makeText(getApplicationContext(), "INVALID PHONE NUMBER REQUEST", Toast.LENGTH_LONG);
@@ -169,6 +175,10 @@ public class SignupPage extends AppCompatActivity {
                 Toast toast = Toast.makeText(getApplicationContext(), "TOO MANY REQUESTS", Toast.LENGTH_LONG);
                 toast.show();
             }
+            else if(e instanceof Exception){
+                System.out.println(e);
+            }
+            Toast toast = Toast.makeText(getApplicationContext(), "INVALID PHONE NUMBER REQUEST", Toast.LENGTH_LONG);
         }
 
         @Override
