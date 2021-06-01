@@ -117,11 +117,13 @@ public class activity_message extends Activity {
                     else {
                         for(int i =0;i<messageList.size();i++)
                         {
-                            if((messageList.get(i).getStatus())>=Integer.parseInt(msg.msg))
-                                break;
                             Message m = messageList.get(i);
                             if(m.getId().equals(msg.msgID))
+                            {
+                               if(m.getStatus()>= Integer.parseInt(msg.msg))
+                                   break;
                                 m.setStatus(Integer.parseInt(msg.msg));
+                            }
                         }
                         MessageDB.Update(msg.msgID, msg.msg);
                     }
@@ -187,11 +189,13 @@ public class activity_message extends Activity {
                         if(task.isSuccessful()){
                             MessageDB.Update(msg.msgID, "2");
                             for(int i =0;i<messageList.size();i++) {
-                                if((messageList.get(i).getStatus())>=Integer.parseInt("2"))
-                                    return;
                                 Message m = messageList.get(i);
                                 if (m.getId().equals(msg.msgID))
+                                {
+                                    if((m.getStatus())>=Integer.parseInt("2"))
+                                        break;
                                     m.setStatus(2);
+                                }
                             }
                             adapter.notifyDataSetChanged();
                         }

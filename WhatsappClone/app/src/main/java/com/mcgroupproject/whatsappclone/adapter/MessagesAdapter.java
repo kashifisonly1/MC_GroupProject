@@ -65,6 +65,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Holder
             lpe.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
             holder.msgBox.setLayoutParams(lpe);
             lpe.setMargins(10,10,10,10);
+            holder.msgBox.setBackgroundColor(Color.rgb(255, 255, 255));
         }
         switch (message.getStatus())
         {

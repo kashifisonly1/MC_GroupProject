@@ -30,12 +30,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.mcgroupproject.whatsappclone.Fragments.MainFragment;
 import com.mcgroupproject.whatsappclone.Fragments.ProfileFragment;
+import com.mcgroupproject.whatsappclone.model.ChatList;
 import com.mcgroupproject.whatsappclone.model.Message;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
 import java.util.EventListener;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -47,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     ChildEventListener listener;
     DatabaseReference recRev;
     private String current_frame = "chatlist";
+    private MainFragment chatFragment;
+    private List<ChatList> usersList;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +97,40 @@ public class MainActivity extends AppCompatActivity {
                     String timeVal = tdf.format(date);
                     String dateVal = sdf.format(date);
                     Message m=new Message(msg.msgID, msg.sender, mAuth.getUid(), msg.msg, 2, timeVal, dateVal, null, null, null, null);
-                    MessageDB.Add(m);
+                    int userID = Users.isUserExist(msg.sender);
+                    if(userID==-1)
+                    {
+                        db.getReference("users/"+msg.sender).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                if(task.isSuccessful())
+                                {
+                                    User user = task.getResult().getValue(User.class);
+                                    ChatList userData = new ChatList(user.UID, user.Phone, user.Name, m.getText(), Long.toString(msg.time), "https://scontent.fmux2-1.fna.fbcdn.net/v/t1.6435-1/c0.0.200.200a/p200x200/134265626_3018484121712082_1854137723180140704_n.jpg?_nc_cat=110&ccb=1-3&_nc_sid=7206a8&_nc_eui2=AeEN0rDDxRNgw6qqXm5RpHGCKCE4MRpc5YsoITgxGlzli4SUpEtDifDI8dTlWKvP7SV9E2Q6pJKs5udYWHM7Z12W&_nc_ohc=mHsfjuJJuVIAX9EKier&_nc_ht=scontent.fmux2-1.fna&tp=27&oh=c8447be514c7d9eef41f96e41db71215&oe=60D65660");
+                                    if(Users.Add(userData))
+                                    {    usersList.add(userData);}
+                                    if(current_frame.equals("chatlist"))
+                                        chatFragment.notifyChange();
+                                    MessageDB.Add(m);
+                                }
+                            }
+                        });
+                    }
+                    else{
+                        for(int i =0; i<usersList.size(); i++) {
+                            ChatList user = usersList.get(i);
+                            if (user.getUserID().equals(msg.sender)) {
+                                if (Long.getLong(user.getDate()) < msg.time) {
+                                    user.setLastMessage(msg.msg);
+                                    user.setDate(Long.toString(msg.time));
+                                }
+                                if (current_frame.equals( "chatlist"))
+                                    chatFragment.notifyChange();
+                                break;
+                            }
+                        }
+                        MessageDB.Add(m);
+                    }
                     String sender = msg.sender;
                     MessageModel newMSG = new MessageModel();
                     newMSG.msg = "3";
@@ -133,7 +170,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         current_frame="chatlist";
-        MainFragment fragment1 = new MainFragment();
+        usersList = Users.Get();
+        MainFragment fragment1 = new MainFragment(usersList);
+        chatFragment = fragment1;
         FragmentTransaction transaction =getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.main_chatlist, fragment1);
         transaction.commit();
@@ -193,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void profileFunction(MenuItem item) {
-        if(current_frame=="profile")
+        if(current_frame.equals("profile"))
             return;
         current_frame = "profile";
         ProfileFragment fragment1 = new ProfileFragment();
@@ -207,10 +246,10 @@ public class MainActivity extends AppCompatActivity {
         recreate();
     }
     public void chatlistFunction(MenuItem item) {
-        if(current_frame=="chatlist")
+        if(current_frame.equals("chatlist"))
             return;
         current_frame = "chatlist";
-        MainFragment fragment1 = new MainFragment();
+        MainFragment fragment1 = chatFragment;
         FragmentTransaction transaction =getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.main_chatlist, fragment1);
         transaction.commit();

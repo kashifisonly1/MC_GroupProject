@@ -13,9 +13,15 @@ import java.util.ListIterator;
 
 public class Users {
     public static final List<ChatList> list = new ArrayList<>();
-    public static void Add(ChatList i)
+    public static boolean Add(ChatList i)
     {
+        for(int a = 0; a<list.size();a++)
+        {
+            if(list.get(a).getUserID().equals(i.getUserID()))
+                return false;
+        }
         list.add(i);
+        return true;
     }
     public static void Remove(ChatList i)
     {
@@ -27,6 +33,16 @@ public class Users {
     }
     public static List<ChatList> Get()
     {
-        return list;
+        List<ChatList> l  = new ArrayList<>();
+        for(int i = 0; i<list.size(); i++)
+            l.add(list.get(i));
+        return l;
+    }
+    public static int isUserExist(String id)
+    {
+        for(int i = 0; i<list.size(); i++)
+            if(list.get(i).getUserID().equals(id))
+                return i;
+        return -1;
     }
 }
