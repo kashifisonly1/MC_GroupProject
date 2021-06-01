@@ -59,8 +59,8 @@ public class activity_message extends Activity {
             id = getIntent().getStringExtra("uid");
             nameView = findViewById(R.id.chat_name);
             online_statusView = findViewById(R.id.status);
+            online_statusView.setText("loading...");
             nameView.setText(getIntent().getStringExtra("name"));
-            online_statusView.setText(getIntent().getStringExtra("status"));
             msgBox = findViewById(R.id.message_box_area);
             DatabaseReference ref= db.getReference("users/"+id);
             ref.keepSynced(true);
@@ -70,6 +70,17 @@ public class activity_message extends Activity {
                     User user= snapshot.getValue(User.class);
                     nameView.setText(user.Name);
                     online_statusView.setText(user.Status);
+                    if(user.Status.equals("Online") || user.Status.equals("online"))
+                        online_statusView.setText(user.Status);
+                    else
+                    {
+                        Date date = new Date(Long.parseLong(user.Status));
+                        SimpleDateFormat sdf = new SimpleDateFormat("MMMM d,yyyy", Locale.ENGLISH);
+                        SimpleDateFormat tdf = new SimpleDateFormat(" h:mm a", Locale.ENGLISH);
+                        String timeVal = tdf.format(date);
+                        String dateVal = sdf.format(date);
+                        online_statusView.setText(dateVal + "  "+timeVal);
+                    }
                 }
 
                 @Override
@@ -160,6 +171,7 @@ public class activity_message extends Activity {
         Message m=new Message(msg.msgID, msg.sender, id, msg.msg, 1, timeVal, dateVal, null, null, null, null);
         MessageDB.Add(m);
         messageList.add(m);
+        msgBox.setText("");
         db.getReference("messages/"+id).push().setValue(msg).addOnCompleteListener(
                 new OnCompleteListener<Void>() {
                     @Override

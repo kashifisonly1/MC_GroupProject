@@ -142,7 +142,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        recRev.removeEventListener(listener);
+        if(recRev!=null&&listener!=null)
+            recRev.removeEventListener(listener);
     }
 
     public void searchUser(View view) {

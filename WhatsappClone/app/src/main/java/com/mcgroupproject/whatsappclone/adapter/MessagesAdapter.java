@@ -1,6 +1,9 @@
 package com.mcgroupproject.whatsappclone.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,6 +41,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Holder
         return new Holder(LayoutInflater.from(context).inflate(R.layout.messages_template,parent,false));
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         Message message = list.get(position);
@@ -46,12 +51,13 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Holder
         String delivered ="@drawable/message_delivered";
         String seen ="@drawable/message_seen";
         String notSent ="@drawable/message_not_sent";
-        if(!Firebase.auth.getUid().equals(message.getSenderID()))
+        if(Firebase.auth.getUid().equals(message.getSenderID()))
         {
             RelativeLayout.LayoutParams lpe = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             lpe.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
             holder.msgBox.setLayoutParams(lpe);
             lpe.setMargins(10,10,10,10);
+            holder.msgBox.setBackgroundColor(Color.rgb(7,94,84));
         }
         else
         {
