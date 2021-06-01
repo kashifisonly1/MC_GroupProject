@@ -47,6 +47,7 @@ public class activity_message extends Activity {
     ChildEventListener listener;
     DatabaseReference recRev;
     private RecyclerView recyclerView;
+    private MessagesAdapter adapter;
     private List<Message> messageList =  new ArrayList<>();
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
@@ -122,6 +123,7 @@ public class activity_message extends Activity {
                         }
                         MessageDB.Update(msg.msgID, msg.msg);
                     }
+                    adapter.notifyDataSetChanged();
                 }
 
                 @Override
@@ -171,6 +173,8 @@ public class activity_message extends Activity {
         Message m=new Message(msg.msgID, msg.sender, id, msg.msg, 1, timeVal, dateVal, null, null, null, null);
         MessageDB.Add(m);
         messageList.add(m);
+        adapter.notifyDataSetChanged();
+        recyclerView.scrollToPosition(messageList.size()-1);
         msgBox.setText("");
         db.getReference("messages/"+id).push().setValue(msg).addOnCompleteListener(
                 new OnCompleteListener<Void>() {
@@ -183,6 +187,7 @@ public class activity_message extends Activity {
                                 if (m.getId().equals(msg.msgID))
                                     m.setStatus(2);
                             }
+                            adapter.notifyDataSetChanged();
                         }
                         else{
 
@@ -197,6 +202,8 @@ public class activity_message extends Activity {
             System.out.println(l.size());
             for(int i = 0; i<l.size(); i++)
                 messageList.add(l.get(i));
-            recyclerView.setAdapter(new MessagesAdapter(messageList, this));
+            adapter = new MessagesAdapter(messageList, this);
+            recyclerView.setAdapter(adapter);
+            recyclerView.scrollToPosition(messageList.size()-1);
     }
 }
