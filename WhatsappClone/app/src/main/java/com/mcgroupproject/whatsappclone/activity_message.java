@@ -156,6 +156,8 @@ public class activity_message extends Activity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void sendMessage(View view) {
         String message = msgBox.getText().toString();
+        if(message.equals(""))
+            return;
         String sender = mAuth.getUid();
         String msgID = (Instant.now().toEpochMilli())+mAuth.getUid();
         String type = "message";

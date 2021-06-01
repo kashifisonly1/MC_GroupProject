@@ -52,13 +52,15 @@
                 android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="589dp"
+        android:layout_height="0dp"
         android:layout_marginTop="1dp"
         android:background="@drawable/wall"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
@@ -70,7 +72,9 @@
 
         </androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
+
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="59dp"
         android:orientation="horizontal"
@@ -101,12 +105,12 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#FFFFFF"
+            android:onClick="sendMessage"
             android:paddingLeft="1dp"
             android:paddingTop="1dp"
             android:paddingRight="1dp"
             android:paddingBottom="1dp"
-            android:src="@drawable/ic_send"
-            android:onClick="sendMessage"/>
+            android:src="@drawable/ic_send" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
