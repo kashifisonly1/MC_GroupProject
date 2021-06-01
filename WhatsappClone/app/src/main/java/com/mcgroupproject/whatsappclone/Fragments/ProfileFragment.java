@@ -65,7 +65,10 @@ public class ProfileFragment extends Fragment {
         storage.getReference().child("profile/"+ mAuth.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Glide.with(getContext()).load(uri.toString()).into(img);
+                try {
+                    Glide.with(getContext()).load(uri.toString()).into(img);
+                }
+                catch (Exception e){}
             }
         });
         Button button = (Button)view.findViewById(R.id.profile_btn_create);
@@ -89,8 +92,8 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==100&&resultCode==getActivity().RESULT_OK&&data!=null)
+        //super.onActivityResult(requestCode, resultCode, data);
+        if(getActivity()!=null&&requestCode==100&&resultCode==getActivity().RESULT_OK&&data!=null)
         {
             Uri filePath = data.getData();
             try {

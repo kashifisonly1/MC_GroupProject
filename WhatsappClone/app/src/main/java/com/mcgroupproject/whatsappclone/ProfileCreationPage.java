@@ -56,6 +56,8 @@ public class ProfileCreationPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_creation_page);
         mAuth = Firebase.auth;
+
+        storage=Firebase.storage;
         img = findViewById(R.id.creation_page_img);
         textView = findViewById(R.id.nameField);
         db = Firebase.db;
