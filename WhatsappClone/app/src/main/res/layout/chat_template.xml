@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
                 <LinearLayout
@@ -11,7 +10,7 @@
 
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
-                    android:background="#4DC8C8C8"
+                    android:background="#36464D"
                     android:orientation="horizontal">
 
                     <com.mikhaellopez.circularimageview.CircularImageView
@@ -36,7 +35,7 @@
                             android:layout_height="49dp"
                             android:paddingTop="10dp"
                             android:text="Name"
-                            android:textColor="@color/black"
+                            android:textColor="@color/white"
                             android:textSize="20sp"
                             android:textStyle="bold" />
 
@@ -45,7 +44,7 @@
 
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
-                            android:textColor="@color/grey"
+                            android:textColor="@color/white"
                             android:text="this is the first message. this is my first message. this is..."
                             android:textSize="16sp" />
                     </LinearLayout>
