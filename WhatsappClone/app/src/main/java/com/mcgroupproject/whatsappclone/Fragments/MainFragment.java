@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.mcgroupproject.whatsappclone.R;
 import com.mcgroupproject.whatsappclone.adapter.ChatListAdapter;
-import com.mcgroupproject.whatsappclone.model.ChatList;
+import com.mcgroupproject.whatsappclone.model.UserModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +20,10 @@ import java.util.List;
 public class MainFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private List<ChatList> list;
+    private List<UserModel> list;
     private ChatListAdapter adapter;
     public MainFragment(){this.list=new ArrayList<>();}
-    public MainFragment(List<ChatList> list) {
+    public MainFragment(List<UserModel> list) {
         this.list=list;
     }
     @Override

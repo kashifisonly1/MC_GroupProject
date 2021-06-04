@@ -22,6 +22,7 @@ public class MessageDB {
     }
     public static void Update(String id, String status)
     {
+        //TODO: greater ka check
         for(int a =0; a<list.size(); a++)
         {
             if(list.get(a).getId().equals(id))
@@ -37,9 +38,9 @@ public class MessageDB {
     {
         return null;
     }
-    public static List<Message> GetAllNotSeenMessages(String uid)
+    public static List<Message> GetAllNotSeenMessages(String senderId)
     {
-        // load all messages whose sender is uid and status != 4
+        //TODO: load all messages whose sender is uid and status != 4
         return null;
     }
     public static List<Message> Get(String uid)

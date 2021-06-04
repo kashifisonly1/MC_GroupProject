@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".chatList"></activity>
+        <activity android:name=".userModel"></activity>
         <activity android:name=".new_group" />
         <activity android:name=".profile" />
         <activity android:name=".settings" />

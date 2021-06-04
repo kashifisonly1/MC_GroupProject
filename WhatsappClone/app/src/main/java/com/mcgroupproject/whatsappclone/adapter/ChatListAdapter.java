@@ -12,23 +12,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.mcgroupproject.whatsappclone.Firebase;
 import com.mcgroupproject.whatsappclone.R;
 import com.mcgroupproject.whatsappclone.activity_message;
-import com.mcgroupproject.whatsappclone.model.ChatList;
+import com.mcgroupproject.whatsappclone.model.UserModel;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.List;
 
 public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.Holder> {
-    private List<ChatList> list;
+    private List<UserModel> list;
     private Context context;
     private FirebaseStorage storage;
-    public ChatListAdapter(List<ChatList> list, Context context) {
+    public ChatListAdapter(List<UserModel> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -43,11 +41,11 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.Holder
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         storage = Firebase.storage;
-        ChatList chatList = list.get(position);
-        holder.name.setText(chatList.getUsername());
-        holder.lastMessage.setText((chatList.getLastMessage()));
+        UserModel userModel = list.get(position);
+        holder.name.setText(userModel.getUsername());
+        holder.lastMessage.setText((userModel.getLastMessage()));
         //holder.date.setText(chatList.getDate());
-        storage.getReference().child("profile/"+chatList.getUserID()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storage.getReference().child("profile/"+ userModel.getUserID()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 Glide.with(context).load(uri.toString()).into(holder.profilePic);
@@ -72,7 +70,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.Holder
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ChatList user = list.get(getAdapterPosition());
+                    UserModel user = list.get(getAdapterPosition());
                     Intent intent = new Intent(context, activity_message.class);
                     intent.putExtra("username",name.getText());
                     intent.putExtra("image", user.getUrlProfile());

@@ -9,8 +9,8 @@ public class Message {
     String time;
     String date;
     String replyATID;
-    ChatList senderObj;
-    ChatList receiverObj;
+    UserModel senderObj;
+    UserModel receiverObj;
     Message replyObj;
 
     public Message(String text, String time, int status)
@@ -19,7 +19,7 @@ public class Message {
         this.time = time;
         this.status = status;
     }
-    public Message(String id, String senderID, String receiverID, String text, int status, String time, String date, String replyATID, ChatList senderObj, ChatList receiverObj, Message replyObj) {
+    public Message(String id, String senderID, String receiverID, String text, int status, String time, String date, String replyATID, UserModel senderObj, UserModel receiverObj, Message replyObj) {
         this.id = id;
         this.senderID = senderID;
         this.receiverID = receiverID;
@@ -97,19 +97,19 @@ public class Message {
         this.replyATID = replyATID;
     }
 
-    public ChatList getSenderObj() {
+    public UserModel getSenderObj() {
         return senderObj;
     }
 
-    public void setSenderObj(ChatList senderObj) {
+    public void setSenderObj(UserModel senderObj) {
         this.senderObj = senderObj;
     }
 
-    public ChatList getReceiverObj() {
+    public UserModel getReceiverObj() {
         return receiverObj;
     }
 
-    public void setReceiverObj(ChatList receiverObj) {
+    public void setReceiverObj(UserModel receiverObj) {
         this.receiverObj = receiverObj;
     }
 

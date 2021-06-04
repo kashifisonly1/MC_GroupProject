@@ -1,19 +1,13 @@
 package com.mcgroupproject.whatsappclone.database;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.mcgroupproject.whatsappclone.model.ChatList;
+import com.mcgroupproject.whatsappclone.model.UserModel;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 public class Users {
-    public static final List<ChatList> list = new ArrayList<>();
-    public static boolean Add(ChatList i)
+    public static final List<UserModel> list = new ArrayList<>();
+    public static boolean Add(UserModel i)
     {
         for(int a = 0; a<list.size();a++)
         {
@@ -23,17 +17,19 @@ public class Users {
         list.add(i);
         return true;
     }
-    public static void Remove(ChatList i)
+    public static void Remove(UserModel i)
     {
+        //TODO: remove user
         list.remove(i);
     }
-    public static void Update(ChatList i)
+    public static void Update(UserModel i)
     {
+        //TODO: update user
         list.set(list.indexOf(i), i);
     }
-    public static List<ChatList> Get()
+    public static List<UserModel> Get()
     {
-        List<ChatList> l  = new ArrayList<>();
+        List<UserModel> l  = new ArrayList<>();
         for(int i = 0; i<list.size(); i++)
             l.add(list.get(i));
         return l;

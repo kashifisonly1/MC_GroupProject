@@ -6,57 +6,39 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageException;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-import com.mcgroupproject.whatsappclone.Utils.FileHandler;
 import com.mcgroupproject.whatsappclone.database.*;
 
-import android.os.FileUtils;
 import android.provider.MediaStore;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ServerValue;
 import com.mcgroupproject.whatsappclone.Fragments.MainFragment;
 import com.mcgroupproject.whatsappclone.Fragments.ProfileFragment;
-import com.mcgroupproject.whatsappclone.model.ChatList;
+import com.mcgroupproject.whatsappclone.model.UserModel;
 import com.mcgroupproject.whatsappclone.model.Message;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
-import java.util.EventListener;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -71,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseStorage storage;
     private String current_frame = "";
     private MainFragment chatFragment;
-    private List<ChatList> usersList;
+    private List<UserModel> usersList;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                                 if(task.isSuccessful())
                                 {
                                     User user = task.getResult().getValue(User.class);
-                                    ChatList userData = new ChatList(user.UID, user.Phone, user.Name, m.getText(), Long.toString(msg.time), "https://scontent.fmux2-1.fna.fbcdn.net/v/t1.6435-1/c0.0.200.200a/p200x200/134265626_3018484121712082_1854137723180140704_n.jpg?_nc_cat=110&ccb=1-3&_nc_sid=7206a8&_nc_eui2=AeEN0rDDxRNgw6qqXm5RpHGCKCE4MRpc5YsoITgxGlzli4SUpEtDifDI8dTlWKvP7SV9E2Q6pJKs5udYWHM7Z12W&_nc_ohc=mHsfjuJJuVIAX9EKier&_nc_ht=scontent.fmux2-1.fna&tp=27&oh=c8447be514c7d9eef41f96e41db71215&oe=60D65660");
+                                    UserModel userData = new UserModel(user.UID, user.Phone, user.Name, m.getText(), Long.toString(msg.time), "https://scontent.fmux2-1.fna.fbcdn.net/v/t1.6435-1/c0.0.200.200a/p200x200/134265626_3018484121712082_1854137723180140704_n.jpg?_nc_cat=110&ccb=1-3&_nc_sid=7206a8&_nc_eui2=AeEN0rDDxRNgw6qqXm5RpHGCKCE4MRpc5YsoITgxGlzli4SUpEtDifDI8dTlWKvP7SV9E2Q6pJKs5udYWHM7Z12W&_nc_ohc=mHsfjuJJuVIAX9EKier&_nc_ht=scontent.fmux2-1.fna&tp=27&oh=c8447be514c7d9eef41f96e41db71215&oe=60D65660");
                                     if(Users.Add(userData))
                                     {    usersList.add(userData);}
                                     if(current_frame.equals("chatlist"))
@@ -142,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else{
                         for(int i =0; i<usersList.size(); i++) {
-                            ChatList user = usersList.get(i);
+                            UserModel user = usersList.get(i);
                             System.out.println(Long.parseLong(user.getDate()));
                             if (user.getUserID().equals(msg.sender)) {
                                 if (Long.parseLong(user.getDate()) < msg.time) {
