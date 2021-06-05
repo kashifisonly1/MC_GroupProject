@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        MessageDB.Init(getApplicationContext());
         if(Firebase.auth==null)
             Firebase.init();
         mAuth = Firebase.auth;
@@ -103,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                     String timeVal = tdf.format(date);
                     String dateVal = sdf.format(date);
                     Message m=new Message(msg.msgID, msg.sender, mAuth.getUid(), msg.msg, 2, timeVal, dateVal, null, null, null, null);
-                    int userID = UserDB.isUserExist(msg.sender);
+                    int userID = UserDB.doesUserExist(msg.sender);
                     if(userID==-1)
                     {
                         db.getReference("users/"+msg.sender).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {

@@ -4,15 +4,34 @@ public class Message {
     String id;
     String senderID;
     String receiverID;
+    String pushId;
     String text;
     int status;
     String time;
     String date;
-    String replyATID;
+    String replyATID = "Not Null";
     User senderObj;
     User receiverObj;
     Message replyObj;
 
+    //model me  mein ne usermodel ko user kr dia hai
+    //or db me user ko userdb
+    //refactor kia hai, so issue ni ae ga naam ka to
+    //chalo ok hai
+
+    //mera ni kaam wo
+    //ki hai
+    //databas
+    //ap ne configuration ki hai?
+    //hogi, mujhy usi ne aa k krai thi meeting me
+    //yar EF wali jo video us ne di thi na
+    //us me sb se pehla kaam database configure krta hai
+    //han hai, deta hun
+    //hes legend
+    //tim corey
+    //in c#
+    //ok me test krta hun
+    //
     public Message()
     {}
     public Message(String text, String time, int status)

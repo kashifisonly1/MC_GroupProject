@@ -40,6 +40,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+//krwao
+//initialize
+
 public class activity_message extends Activity {
 
     FirebaseAuth mAuth;
@@ -61,6 +64,7 @@ public class activity_message extends Activity {
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_message);
+            MessageDB.Init(getApplicationContext());
             db = Firebase.db;
             mAuth = Firebase.auth;
             storage=Firebase.storage;
@@ -73,6 +77,7 @@ public class activity_message extends Activity {
                     Glide.with(getApplicationContext()).load(uri.toString()).into(img);
                 }
             });
+            //add wala error remove ho gya hai i think
             nameView = findViewById(R.id.chat_name);
             online_statusView = findViewById(R.id.status);
             online_statusView.setText("loading...");
@@ -127,6 +132,9 @@ public class activity_message extends Activity {
                         String dateVal = sdf.format(date);
                         Message message=new Message(msg.msgID, msg.sender, mAuth.getUid(), msg.msg, 2, timeVal, dateVal, null, null, null, null);
                         MessageDB.Add(message);
+                        //static
+                        //wo masla ni hal kia
+
                         messageList.add(message);
                     }
                     else {

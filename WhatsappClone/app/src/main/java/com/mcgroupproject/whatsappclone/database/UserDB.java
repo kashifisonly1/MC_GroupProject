@@ -13,6 +13,10 @@ public class UserDB {
         {
             if(list.get(a).getUserID().equals(i.getUserID()))
                 return false;
+            //ap ne jana ap chaly jao, me kr leta test
+            //ek kia hai
+            //ye me ab usama ki id se kr rha hun commits
+            //
         }
         list.add(i);
         return true;
@@ -34,7 +38,7 @@ public class UserDB {
             l.add(list.get(i));
         return l;
     }
-    public static int isUserExist(String id)
+    public static int doesUserExist(String id)
     {
         for(int i = 0; i<list.size(); i++)
             if(list.get(i).getUserID().equals(id))
