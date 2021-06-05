@@ -17,16 +17,16 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.mcgroupproject.whatsappclone.Firebase;
 import com.mcgroupproject.whatsappclone.R;
 import com.mcgroupproject.whatsappclone.activity_message;
-import com.mcgroupproject.whatsappclone.model.UserModel;
+import com.mcgroupproject.whatsappclone.model.User;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.List;
 
 public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.Holder> {
-    private List<UserModel> list;
+    private List<User> list;
     private Context context;
     private FirebaseStorage storage;
-    public ChatListAdapter(List<UserModel> list, Context context) {
+    public ChatListAdapter(List<User> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -41,11 +41,11 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.Holder
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         storage = Firebase.storage;
-        UserModel userModel = list.get(position);
-        holder.name.setText(userModel.getUsername());
-        holder.lastMessage.setText((userModel.getLastMessage()));
+        User user = list.get(position);
+        holder.name.setText(user.getUsername());
+        holder.lastMessage.setText((user.getLastMessage()));
         //holder.date.setText(chatList.getDate());
-        storage.getReference().child("profile/"+ userModel.getUserID()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storage.getReference().child("profile/"+ user.getUserID()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 Glide.with(context).load(uri.toString()).into(holder.profilePic);
@@ -70,7 +70,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.Holder
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    UserModel user = list.get(getAdapterPosition());
+                    User user = list.get(getAdapterPosition());
                     Intent intent = new Intent(context, activity_message.class);
                     intent.putExtra("username",name.getText());
                     intent.putExtra("image", user.getUrlProfile());

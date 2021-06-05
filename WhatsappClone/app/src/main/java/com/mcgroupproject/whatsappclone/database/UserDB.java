@@ -1,13 +1,13 @@
 package com.mcgroupproject.whatsappclone.database;
 
-import com.mcgroupproject.whatsappclone.model.UserModel;
+import com.mcgroupproject.whatsappclone.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Users {
-    public static final List<UserModel> list = new ArrayList<>();
-    public static boolean Add(UserModel i)
+public class UserDB {
+    public static final List<User> list = new ArrayList<>();
+    public static boolean Add(User i)
     {
         for(int a = 0; a<list.size();a++)
         {
@@ -17,19 +17,19 @@ public class Users {
         list.add(i);
         return true;
     }
-    public static void Remove(UserModel i)
+    public static void Remove(User i)
     {
         //TODO: remove user
         list.remove(i);
     }
-    public static void Update(UserModel i)
+    public static void Update(User i)
     {
         //TODO: update user
         list.set(list.indexOf(i), i);
     }
-    public static List<UserModel> Get()
+    public static List<User> Get()
     {
-        List<UserModel> l  = new ArrayList<>();
+        List<User> l  = new ArrayList<>();
         for(int i = 0; i<list.size(); i++)
             l.add(list.get(i));
         return l;

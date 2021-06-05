@@ -1,6 +1,6 @@
 package com.mcgroupproject.whatsappclone.model;
 
-public class UserModel {
+public class User {
     private String userID;
     private String username;
     private String lastMessage;
@@ -8,10 +8,10 @@ public class UserModel {
     private String Phone;
     private String urlProfile;
 
-    public UserModel() {
+    public User() {
     }
 
-    public UserModel(String userID, String phone, String username, String lastMessage, String date, String urlProfile) {
+    public User(String userID, String phone, String username, String lastMessage, String date, String urlProfile) {
         this.userID = userID;
         this.username = username;
         this.lastMessage = lastMessage;

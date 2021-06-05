@@ -32,7 +32,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.mcgroupproject.whatsappclone.Fragments.MainFragment;
 import com.mcgroupproject.whatsappclone.Fragments.ProfileFragment;
-import com.mcgroupproject.whatsappclone.model.UserModel;
+import com.mcgroupproject.whatsappclone.model.User;
 import com.mcgroupproject.whatsappclone.model.Message;
 
 import java.io.IOException;
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseStorage storage;
     private String current_frame = "";
     private MainFragment chatFragment;
-    private List<UserModel> usersList;
+    private List<User> usersList;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             finish();
             return;
         }
-        usersList = Users.Get();
+        usersList = UserDB.Get();
         chatFragment = new MainFragment(usersList);
         db.getReference().child("users").child(mAuth.getUid()).child("Status").setValue("online").addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                     String timeVal = tdf.format(date);
                     String dateVal = sdf.format(date);
                     Message m=new Message(msg.msgID, msg.sender, mAuth.getUid(), msg.msg, 2, timeVal, dateVal, null, null, null, null);
-                    int userID = Users.isUserExist(msg.sender);
+                    int userID = UserDB.isUserExist(msg.sender);
                     if(userID==-1)
                     {
                         db.getReference("users/"+msg.sender).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -111,9 +111,9 @@ public class MainActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<DataSnapshot> task) {
                                 if(task.isSuccessful())
                                 {
-                                    User user = task.getResult().getValue(User.class);
-                                    UserModel userData = new UserModel(user.UID, user.Phone, user.Name, m.getText(), Long.toString(msg.time), "https://scontent.fmux2-1.fna.fbcdn.net/v/t1.6435-1/c0.0.200.200a/p200x200/134265626_3018484121712082_1854137723180140704_n.jpg?_nc_cat=110&ccb=1-3&_nc_sid=7206a8&_nc_eui2=AeEN0rDDxRNgw6qqXm5RpHGCKCE4MRpc5YsoITgxGlzli4SUpEtDifDI8dTlWKvP7SV9E2Q6pJKs5udYWHM7Z12W&_nc_ohc=mHsfjuJJuVIAX9EKier&_nc_ht=scontent.fmux2-1.fna&tp=27&oh=c8447be514c7d9eef41f96e41db71215&oe=60D65660");
-                                    if(Users.Add(userData))
+                                    com.mcgroupproject.whatsappclone.User user = task.getResult().getValue(com.mcgroupproject.whatsappclone.User.class);
+                                    com.mcgroupproject.whatsappclone.model.User userData = new User(user.UID, user.Phone, user.Name, m.getText(), Long.toString(msg.time), "https://scontent.fmux2-1.fna.fbcdn.net/v/t1.6435-1/c0.0.200.200a/p200x200/134265626_3018484121712082_1854137723180140704_n.jpg?_nc_cat=110&ccb=1-3&_nc_sid=7206a8&_nc_eui2=AeEN0rDDxRNgw6qqXm5RpHGCKCE4MRpc5YsoITgxGlzli4SUpEtDifDI8dTlWKvP7SV9E2Q6pJKs5udYWHM7Z12W&_nc_ohc=mHsfjuJJuVIAX9EKier&_nc_ht=scontent.fmux2-1.fna&tp=27&oh=c8447be514c7d9eef41f96e41db71215&oe=60D65660");
+                                    if(UserDB.Add(userData))
                                     {    usersList.add(userData);}
                                     if(current_frame.equals("chatlist"))
                                         chatFragment.notifyChange();
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else{
                         for(int i =0; i<usersList.size(); i++) {
-                            UserModel user = usersList.get(i);
+                            User user = usersList.get(i);
                             System.out.println(Long.parseLong(user.getDate()));
                             if (user.getUserID().equals(msg.sender)) {
                                 if (Long.parseLong(user.getDate()) < msg.time) {
