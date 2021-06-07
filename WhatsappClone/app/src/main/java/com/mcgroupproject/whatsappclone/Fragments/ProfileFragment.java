@@ -1,12 +1,11 @@
 package com.mcgroupproject.whatsappclone.Fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -17,80 +16,57 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-import com.mcgroupproject.whatsappclone.Firebase;
+import com.mcgroupproject.whatsappclone.Firebase.FirebaseActions.FirebaseProfileActions;
+import com.mcgroupproject.whatsappclone.Firebase.FirebaseActions.FirebaseStorageActions;
+import com.mcgroupproject.whatsappclone.Firebase.FirebaseListeners.ActionFailureListener;
+import com.mcgroupproject.whatsappclone.Firebase.FirebaseListeners.DownloadImageListener;
+import com.mcgroupproject.whatsappclone.Firebase.FirebaseListeners.UpdateProfileListener;
 import com.mcgroupproject.whatsappclone.R;
-import com.mcgroupproject.whatsappclone.User;
-
-import java.io.ByteArrayOutputStream;
+import com.mcgroupproject.whatsappclone.Utilities.ImageUtility;
 import java.io.IOException;
 
 public class ProfileFragment extends Fragment {
 
-    FirebaseAuth mAuth;
     EditText textView;
-    FirebaseStorage storage;
+    FirebaseProfileActions firebaseProfileActions;
+    FirebaseStorageActions firebaseStorageActions;
+    Context AppContext;
     ImageView img;
-    FirebaseDatabase db;
+    Activity activity;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.activity = getActivity();
+        firebaseProfileActions = new FirebaseProfileActions(activity);
+        firebaseStorageActions = new FirebaseStorageActions(activity);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        mAuth = Firebase.auth;
         textView = view.findViewById(R.id.searchPhoneField);
-        db = Firebase.db;
-        storage = Firebase.storage;
+        AppContext = getActivity().getApplicationContext();
         img = view.findViewById(R.id.profile_img);
-        textView.setText(mAuth.getCurrentUser().getDisplayName());
-        storage.getReference().child("profile/"+ mAuth.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                try {
-                    Glide.with(getContext()).load(uri.toString()).into(img);
-                }
-                catch (Exception e){}
-            }
-        });
+        textView.setText(firebaseProfileActions.GetCurrentUser().getDisplayName());
+        firebaseStorageActions.DownloadProfileImage(firebaseProfileActions.GetCurrentUser().getUid())
+                .addOnSuccessListener(new DownloadImageListener(activity, img))
+                .addOnFailureListener(new ActionFailureListener(activity));
         Button button = (Button)view.findViewById(R.id.profile_btn_create);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setName(v);
-            }
-        });
-        img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");
-                startActivityForResult(intent, 100);
-            }
+        button.setOnClickListener(this::setName);
+        img.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
+            startActivityForResult(intent, 100);
         });
         return view;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        //super.onActivityResult(requestCode, resultCode, data);
-        if(getActivity()!=null&&requestCode==100&&resultCode==getActivity().RESULT_OK&&data!=null)
+        super.onActivityResult(requestCode, resultCode, data);
+        if(getActivity()!=null&&requestCode==100&&resultCode== Activity.RESULT_OK &&data!=null)
         {
             Uri filePath = data.getData();
             try {
@@ -104,57 +80,14 @@ public class ProfileFragment extends Fragment {
 
     public void setName(View view) {
         String name = textView.getText().toString();
-        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                .setDisplayName(name)
-                .build();
-        mAuth.getCurrentUser().updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    User user = new User();
-                    user.UID= mAuth.getUid();
-                    user.Name=mAuth.getCurrentUser().getDisplayName();
-                    user.Phone=mAuth.getCurrentUser().getPhoneNumber();
-                    user.Status="online";
-                    updateDatabase(user);
-                }else {
-                    Toast.makeText(getContext(), "Could not change name", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+        if(name.equals("")) {
+            textView.setError("Please Enter Name");
+            return;
+        }
+        byte[] imgBytes = ImageUtility.ImageToBytes(img);
+        if(imgBytes==null) return;
+        firebaseProfileActions.UpdateProfile(name)
+                .addOnCompleteListener(new UpdateProfileListener<>(activity, imgBytes))
+                .addOnFailureListener(new ActionFailureListener(activity));
     }
-    private void updateDatabase(User user)
-    {
-        img.setDrawingCacheEnabled(true);
-        img.buildDrawingCache();
-        Bitmap bitmap = ((BitmapDrawable)img.getDrawable()).getBitmap();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        byte[] bytes = baos.toByteArray();
-        StorageReference ref = storage.getReference().child("profile/"+mAuth.getUid());
-        ref.putBytes(bytes).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getContext(), "Could not upload file", Toast.LENGTH_LONG).show();
-            }
-        }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                Toast.makeText(getContext(), "file uploaded", Toast.LENGTH_LONG).show();
-                db.getReference().child("users").child(user.UID)
-                .setValue(user)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getContext(), "Profile Updated", Toast.LENGTH_LONG).show();
-                        } else {
-                            Toast.makeText(getContext(), "Could not update data", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-            }
-        });
-    }
-
 }

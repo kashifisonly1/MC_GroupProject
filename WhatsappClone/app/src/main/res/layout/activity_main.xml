@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".Activity.MainActivity">
 
     <LinearLayout
         android:id="@+id/main_chatlist"
@@ -26,5 +26,5 @@
         app:layout_constraintStart_toStartOf="parent"
         android:backgroundTint="#131B1E"
         android:background="#131B1E"
-        app:menu="@menu/items_menu" />
+        app:menu="@menu/menu_main" />
 </androidx.constraintlayout.widget.ConstraintLayout>
