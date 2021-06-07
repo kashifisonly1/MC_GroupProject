@@ -1,5 +1,9 @@
 package com.mcgroupproject.whatsappclone.model;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class Message {
     String id;
     String senderID;
@@ -8,30 +12,13 @@ public class Message {
     String text;
     int status;
     String time;
+    long timeInt;
     String date;
     String replyATID = "Not Null";
     User senderObj;
     User receiverObj;
     Message replyObj;
 
-    //model me  mein ne usermodel ko user kr dia hai
-    //or db me user ko userdb
-    //refactor kia hai, so issue ni ae ga naam ka to
-    //chalo ok hai
-
-    //mera ni kaam wo
-    //ki hai
-    //databas
-    //ap ne configuration ki hai?
-    //hogi, mujhy usi ne aa k krai thi meeting me
-    //yar EF wali jo video us ne di thi na
-    //us me sb se pehla kaam database configure krta hai
-    //han hai, deta hun
-    //hes legend
-    //tim corey
-    //in c#
-    //ok me test krta hun
-    //
     public Message()
     {}
     public Message(String text, String time, int status)
@@ -40,7 +27,9 @@ public class Message {
         this.time = time;
         this.status = status;
     }
-    public Message(String id, String senderID, String receiverID, String text, int status, String time, String date, String replyATID, User senderObj, User receiverObj, Message replyObj) {
+    public void setTimeInt(long t) { timeInt = t; }
+    public long getTimeInt() { return timeInt; }
+    public Message(String id, String senderID, String receiverID, String text, int status, String time, String date, String replyATID, User senderObj, User receiverObj, Message replyObj, long t) {
         this.id = id;
         this.senderID = senderID;
         this.receiverID = receiverID;
@@ -48,6 +37,7 @@ public class Message {
         this.status = status;
         this.time = time;
         this.date = date;
+        timeInt = t;
         this.replyATID = replyATID;
         this.senderObj = senderObj;
         this.receiverObj = receiverObj;
@@ -77,6 +67,15 @@ public class Message {
     public void setReceiverID(String receiverID) {
         this.receiverID = receiverID;
     }
+
+    public String getPushId() {
+        return pushId;
+    }
+
+    public void setPushId(String pushId) {
+        this.pushId = pushId;
+    }
+
 
     public String getText() {
         return text;
@@ -140,5 +139,13 @@ public class Message {
 
     public void setReplyObj(Message replyObj) {
         this.replyObj = replyObj;
+    }
+    public void setDateTime()
+    {
+        Date date = new Date(timeInt);
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM d,yyyy", Locale.ENGLISH);
+        SimpleDateFormat tdf = new SimpleDateFormat(" h:mm a", Locale.ENGLISH);
+        this.time = tdf.format(date);
+        this.date = sdf.format(date);
     }
 }

@@ -14,6 +14,7 @@
         android:enabled="true"
         android:icon="@drawable/ic_search"
         android:title="Search"
+        android:onClick="searchPersonFunction"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_profile"

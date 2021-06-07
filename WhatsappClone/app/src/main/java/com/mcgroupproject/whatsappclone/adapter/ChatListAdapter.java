@@ -72,7 +72,8 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.Holder
                 public void onClick(View v) {
                     User user = list.get(getAdapterPosition());
                     Intent intent = new Intent(context, activity_message.class);
-                    intent.putExtra("username",name.getText());
+                    intent.putExtra("name",name.getText());
+                    intent.putExtra("status", "loading...");
                     intent.putExtra("image", user.getUrlProfile());
                     intent.putExtra("phone", user.getPhone());
                     intent.putExtra("uid", user.getUserID());

@@ -17,6 +17,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:backgroundTint="#131B1E"
+            android:onClick="GoBack"
+            android:src="@drawable/ic_back" />
+
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/profile_image_link"
             android:layout_width="80dp"

@@ -1,14 +1,24 @@
 package com.mcgroupproject.whatsappclone;
 
+import android.Manifest;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.common.collect.MapMaker;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.mcgroupproject.whatsappclone.Fragments.SearchFragment;
 import com.mcgroupproject.whatsappclone.database.*;
 
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +30,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,6 +45,7 @@ import com.mcgroupproject.whatsappclone.Fragments.MainFragment;
 import com.mcgroupproject.whatsappclone.Fragments.ProfileFragment;
 import com.mcgroupproject.whatsappclone.model.User;
 import com.mcgroupproject.whatsappclone.model.Message;
+import com.mcgroupproject.whatsappclone.model.UserComparison;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -59,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        UserDB.Init(getApplicationContext());
         MessageDB.Init(getApplicationContext());
         if(Firebase.auth==null)
             Firebase.init();
@@ -79,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         usersList = UserDB.Get();
+        usersList.sort(new UserComparison());
         chatFragment = new MainFragment(usersList);
         db.getReference().child("users").child(mAuth.getUid()).child("Status").setValue("online").addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -99,13 +113,14 @@ public class MainActivity extends AppCompatActivity {
                 if(msg.type.equals("message"))
                 {
                     Date date = new Date(msg.time);
-                    SimpleDateFormat sdf = new SimpleDateFormat("EEEE,MMMM d,yyyy", Locale.ENGLISH);
+                    SimpleDateFormat sdf = new SimpleDateFormat("MMMM d,yyyy", Locale.ENGLISH);
                     SimpleDateFormat tdf = new SimpleDateFormat(" h:mm,a", Locale.ENGLISH);
                     String timeVal = tdf.format(date);
                     String dateVal = sdf.format(date);
-                    Message m=new Message(msg.msgID, msg.sender, mAuth.getUid(), msg.msg, 2, timeVal, dateVal, null, null, null, null);
-                    int userID = UserDB.doesUserExist(msg.sender);
-                    if(userID==-1)
+                    Message m=new Message(msg.msgID, msg.sender, mAuth.getUid(), msg.msg, 2, timeVal, dateVal, null, null, null, null, msg.time);
+                    m.setPushId(snapshot.getKey());
+                    boolean userID = UserDB.DoesUserExists(msg.sender);
+                    if(!userID)
                     {
                         db.getReference("users/"+msg.sender).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                 @Override
@@ -151,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
                 else{
                     MessageDB.Update(msg.msgID, msg.msg);
                 }
+                usersList.sort(new UserComparison());
             }
 
             @Override
@@ -171,7 +187,38 @@ public class MainActivity extends AppCompatActivity {
 
             }
         };
-        recRev.addChildEventListener(listener);
+        String last_push_id = MessageDB.GetLastPushID();
+        if(!last_push_id.equals("")){
+        db.getReference("/messages/"+mAuth.getUid()).orderByKey().endBefore(last_push_id).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                snapshot.getRef().removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) { }
+                });
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });}
+        recRev.orderByKey().startAfter(last_push_id).addChildEventListener(listener);
     }
 
     @Override
@@ -193,37 +240,6 @@ public class MainActivity extends AppCompatActivity {
             recRev.removeEventListener(listener);
     }
 
-    public void searchUser(View view) {
-        EditText searchUSerText = findViewById(R.id.search_user);
-        String phone = searchUSerText.getText().toString();
-        Intent intent = new Intent(getBaseContext(), ChatPage.class);
-        db.getReference().child("users").orderByChild("Phone").equalTo(phone)
-        .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Connection Error", Toast.LENGTH_LONG).show();
-                }
-                else {
-                    Map<String, Map<String, String>> map = (Map)task.getResult().getValue();
-                    if(map==null)
-                    {
-                        Toast.makeText(getApplicationContext(), "Please enter valid phone", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    String key = map.keySet().iterator().next();
-                    Map<String, String> user = map.get(key);
-                    System.out.println(user);
-                    intent.putExtra("phone", user.get("Phone"));
-                    intent.putExtra("uid", user.get("UID"));
-                    intent.putExtra("name", user.get("Name"));
-                    intent.putExtra("status", user.get("Status"));
-                    startActivity(intent);
-                    finish();
-                }
-            }
-        });
-    }
     public void sendAcknowledge(final MessageModel msg, String ID) {
         db.getReference("messages/"+ID).push().setValue(msg).addOnCompleteListener(
                 new OnCompleteListener<Void>() {
@@ -251,6 +267,8 @@ public class MainActivity extends AppCompatActivity {
     public void logoutFunction(MenuItem item)
     {
         mAuth.signOut();
+        UserDB.reset_db();
+        MessageDB.reset_db();
         finish();
     }
 
@@ -259,7 +277,6 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==100&&resultCode==RESULT_OK&&data!=null)
         {
-            System.out.println("-----------------------");
             Uri filePath = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), filePath);
@@ -283,6 +300,15 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction =getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.main_chatlist, fragment1);
         transaction.commit();
+        chatFragment.notifyChange();
     }
-
+    public void searchPersonFunction(MenuItem item){
+        if(current_frame.equals("search"))
+            return;
+        current_frame = "search";
+        SearchFragment frag = new SearchFragment(usersList);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_chatlist, frag);
+        transaction.commit();
+    }
 }

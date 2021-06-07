@@ -13,6 +13,7 @@ public class User {
 
     public User(String userID, String phone, String username, String lastMessage, String date, String urlProfile) {
         this.userID = userID;
+        this.Phone = phone;
         this.username = username;
         this.lastMessage = lastMessage;
         Date = date;

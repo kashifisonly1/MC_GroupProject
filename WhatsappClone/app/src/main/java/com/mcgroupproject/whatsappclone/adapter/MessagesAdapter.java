@@ -45,6 +45,13 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Holder
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         Message message = list.get(position);
+        holder.dateArea.setText(message.getDate());
+        if(position!=0 && list.get(position-1).getDate().equals(message.getDate())) {
+            holder.dateArea.setVisibility(View.GONE);
+        }
+        else {
+            holder.dateArea.setVisibility(View.VISIBLE);
+        }
         holder.text.setText(message.getText());
         holder.time.setText(message.getTime());
         String sent ="@drawable/message_sent";
@@ -55,6 +62,9 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Holder
         {
             RelativeLayout.LayoutParams lpe = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             lpe.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
+            lpe.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
+            lpe.addRule(RelativeLayout.BELOW, holder.dateArea.getId());
+            holder.img.setVisibility(View.VISIBLE);
             holder.msgBox.setLayoutParams(lpe);
             lpe.setMargins(10,10,10,10);
             holder.msgBox.setBackgroundColor(Color.rgb(7,94,84));
@@ -63,7 +73,10 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Holder
         {
             RelativeLayout.LayoutParams lpe = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             lpe.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
+            lpe.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
+            lpe.addRule(RelativeLayout.BELOW, holder.dateArea.getId());
             holder.msgBox.setLayoutParams(lpe);
+            holder.img.setVisibility(View.GONE);
             lpe.setMargins(10,10,10,10);
             holder.msgBox.setBackgroundColor(Color.rgb(54, 70, 77));
         }
@@ -92,9 +105,11 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Holder
     public class Holder extends RecyclerView.ViewHolder {
         private TextView text,time;
         ImageView img;
+        TextView dateArea;
         private LinearLayout msgBox;
         public Holder(@NonNull View itemView) {
             super(itemView);
+            dateArea = itemView.findViewById(R.id.date_area_id);
             text= itemView.findViewById(R.id.message_text);
             time = itemView.findViewById(R.id.message_time);
             img = itemView.findViewById(R.id.message_status_symbol);

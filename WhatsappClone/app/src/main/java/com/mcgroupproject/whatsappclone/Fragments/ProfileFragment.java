@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,10 +31,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.mcgroupproject.whatsappclone.Firebase;
-import com.mcgroupproject.whatsappclone.MainActivity;
 import com.mcgroupproject.whatsappclone.R;
 import com.mcgroupproject.whatsappclone.User;
-import com.mcgroupproject.whatsappclone.chatList;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -57,7 +54,7 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         mAuth = Firebase.auth;
-        textView = view.findViewById(R.id.nameField);
+        textView = view.findViewById(R.id.searchPhoneField);
         db = Firebase.db;
         storage = Firebase.storage;
         img = view.findViewById(R.id.profile_img);

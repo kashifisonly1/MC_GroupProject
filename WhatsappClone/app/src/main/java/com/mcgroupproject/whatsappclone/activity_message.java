@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -80,7 +81,19 @@ public class activity_message extends Activity {
             //add wala error remove ho gya hai i think
             nameView = findViewById(R.id.chat_name);
             online_statusView = findViewById(R.id.status);
-            online_statusView.setText("loading...");
+            String s = getIntent().getStringExtra("status");
+            if(s.equals("online") || s.equals("Online") || s.equals("loading..."))
+            {
+                online_statusView.setText(s);
+            }
+            else{
+                Date date = new Date(Long.parseLong(s));
+                SimpleDateFormat sdf = new SimpleDateFormat("MMMM d,yyyy", Locale.ENGLISH);
+                SimpleDateFormat tdf = new SimpleDateFormat(" h:mm a", Locale.ENGLISH);
+                String timeVal = tdf.format(date);
+                String dateVal = sdf.format(date);
+                online_statusView.setText(dateVal + "  "+timeVal);
+            }
             nameView.setText(getIntent().getStringExtra("name"));
             msgBox = findViewById(R.id.message_box_area);
             DatabaseReference ref= db.getReference("users/"+id);
@@ -89,6 +102,8 @@ public class activity_message extends Activity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     User user= snapshot.getValue(User.class);
+                    if(user==null)
+                        return;
                     nameView.setText(user.Name);
                     online_statusView.setText(user.Status);
                     if(user.Status.equals("Online") || user.Status.equals("online"))
@@ -126,16 +141,17 @@ public class activity_message extends Activity {
                         msg.type="";
                     if(msg.type.equals("message")) {
                         Date date = new Date(msg.time);
-                        SimpleDateFormat sdf = new SimpleDateFormat("EEEE,MMMM d,yyyy", Locale.ENGLISH);
+                        SimpleDateFormat sdf = new SimpleDateFormat("MMMM d,yyyy", Locale.ENGLISH);
                         SimpleDateFormat tdf = new SimpleDateFormat(" h:mm,a", Locale.ENGLISH);
                         String timeVal = tdf.format(date);
                         String dateVal = sdf.format(date);
-                        Message message=new Message(msg.msgID, msg.sender, mAuth.getUid(), msg.msg, 2, timeVal, dateVal, null, null, null, null);
+                        Message message=new Message(msg.msgID, msg.sender, mAuth.getUid(), msg.msg, 2, timeVal, dateVal, null, null, null, null, msg.time);
+                        message.setPushId(snapshot.getKey());
                         MessageDB.Add(message);
-                        //static
-                        //wo masla ni hal kia
-
                         messageList.add(message);
+                        List<Message> mmm = new ArrayList<>();
+                        mmm.add(message);
+                        SendAcks(mmm);
                     }
                     else {
                         for(int i =0;i<messageList.size();i++)
@@ -143,7 +159,7 @@ public class activity_message extends Activity {
                             Message m = messageList.get(i);
                             if(m.getId().equals(msg.msgID))
                             {
-                               if(m.getStatus()>= Integer.parseInt(msg.msg))
+                               if(m.getStatus() >= Integer.parseInt(msg.msg))
                                    break;
                                 m.setStatus(Integer.parseInt(msg.msg));
                             }
@@ -171,9 +187,88 @@ public class activity_message extends Activity {
 
                 }
             };
-            recRev.addChildEventListener(listener);
+            String last_push_id = MessageDB.GetLastPushID();
+            recRev.orderByKey().startAfter(last_push_id).addChildEventListener(listener);
+            List<Message> unread_msg = MessageDB.unreadMsg(id);
+            List<Message> unseen_msg = MessageDB.unseenMsg();
+            SendAcks(unread_msg);
+            SendMsgs(unseen_msg);
     }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void SendMsgs(List<Message> unseen_msg){
+        for (Message m: unseen_msg) {
+            System.out.println(m.getSenderID());
+            MessageModel msg = new MessageModel();
+            msg.sender=m.getSenderID();
+            msg.type="message";
+            msg.msg=m.getText();
+            msg.time=Instant.now().toEpochMilli();
+            msg.msgID=m.getId();
+            DatabaseReference ref =  db.getReference("messages/"+id).push();
+            String newKey = ref.getKey();
+            m.setPushId(newKey);
+            MessageDB.rm(m);
+            MessageDB.Add(m);
+            ref.setValue(msg).addOnCompleteListener(
+                    new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                MessageDB.Update(msg.msgID, "2");
+                                for(int i =0;i<messageList.size();i++) {
+                                    Message m = messageList.get(i);
+                                    if (m.getId().equals(msg.msgID))
+                                    {
+                                        if((m.getStatus())>=Integer.parseInt("2"))
+                                            break;
+                                        m.setStatus(2);
+                                    }
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
+                            else{
 
+                            }
+                        }
+                    }
+            );
+        }
+    }
+    private void SendAcks(List<Message> unread_msg){
+        for (Message m: unread_msg) {
+            m.setStatus(4);
+            MessageModel msg = new MessageModel();
+            msg.sender=mAuth.getUid();
+            msg.type="ack";
+            msg.msg="4";
+            msg.time=m.getTimeInt();
+            msg.msgID=m.getId();
+            DatabaseReference ref =  db.getReference("messages/"+id).push();
+            ref.setValue(msg).addOnCompleteListener(
+                    new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                MessageDB.Update(msg.msgID, "4");
+                                for(int i =0;i<messageList.size();i++) {
+                                    Message m = messageList.get(i);
+                                    if (m.getId().equals(msg.msgID))
+                                    {
+                                        if((m.getStatus())>=Integer.parseInt("4"))
+                                            break;
+                                        m.setStatus(4);
+                                    }
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
+                            else{
+
+                            }
+                        }
+                    }
+            );
+        }
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -196,17 +291,21 @@ public class activity_message extends Activity {
         msg.time = Instant.now().toEpochMilli();//current time, will be adjust later
         msg.type = type;
         Date date = new Date(msg.time);
-        SimpleDateFormat sdf = new SimpleDateFormat("EEEE,MMMM d,yyyy", Locale.ENGLISH);
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM d,yyyy", Locale.ENGLISH);
         SimpleDateFormat tdf = new SimpleDateFormat(" h:mm,a", Locale.ENGLISH);
         String timeVal = tdf.format(date);
         String dateVal = sdf.format(date);
-        Message m=new Message(msg.msgID, msg.sender, id, msg.msg, 1, timeVal, dateVal, null, null, null, null);
+        Message m=new Message(msg.msgID, msg.sender, id, msg.msg, 1, timeVal, dateVal, null, null, null, null, msg.time);
+        DatabaseReference ref =  db.getReference("messages/"+id).push();
+        String push_id = ref.getKey();
+        System.out.println(push_id);
+        m.setPushId(push_id);
         MessageDB.Add(m);
         messageList.add(m);
         adapter.notifyDataSetChanged();
         recyclerView.scrollToPosition(messageList.size()-1);
         msgBox.setText("");
-        db.getReference("messages/"+id).push().setValue(msg).addOnCompleteListener(
+        ref.setValue(msg).addOnCompleteListener(
                 new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -239,5 +338,9 @@ public class activity_message extends Activity {
             adapter = new MessagesAdapter(messageList, this);
             recyclerView.setAdapter(adapter);
             recyclerView.scrollToPosition(messageList.size()-1);
+    }
+
+    public void GoBack(View view) {
+        finish();
     }
 }
