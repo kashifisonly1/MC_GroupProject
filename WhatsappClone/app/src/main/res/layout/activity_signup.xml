@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.SignUpActivity"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:padding="30dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Verify your phone number"
+        android:textColor="#0FA647"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp">
+
+    </TextView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Our App will send an SMS message to verify your phone number. Enter your country code and phone number:"
+        android:textSize="14sp"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/black"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+    </TextView>
+
+    <EditText
+        android:id="@+id/phoneField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="8dp"
+        android:autofillHints=""
+        android:backgroundTint="#0C7332"
+        android:backgroundTintMode="src_atop"
+        android:drawableStart="@drawable/ic_smartphone"
+        android:drawablePadding="12dp"
+        android:ems="10"
+        android:hint="+92XXXXXXXXXX"
+        android:textColorHint="@color/grey"
+        android:inputType="phone"
+        android:textColor="@color/black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center|bottom"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/profile_btn_create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#0FA647"
+            android:text="Next"
+            android:textColor="@color/white"
+            android:onClick="sendVerificationCode"
+            android:layout_gravity="center|bottom"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:shadowColor="@color/black"
+            android:textSize="12dp"
+            android:layout_marginBottom="8dp"
+            android:text="Carrier SMS charges may apply" />
+    </LinearLayout>
+
+</LinearLayout>
