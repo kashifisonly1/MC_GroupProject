@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:gravity="center|top|center_vertical"
         android:orientation="vertical"
+        android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -33,7 +34,7 @@
             android:layout_marginRight="10dp"
             android:paddingTop="10dp"
             android:text="Name"
-            android:textColor="@color/white"
+            android:textColor="@color/grey"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -45,8 +46,9 @@
             android:layout_marginRight="10dp"
             android:ems="10"
             android:hint="Name"
+            android:textColorHint="@color/grey"
             android:inputType="textPersonName"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:backgroundTint="#8F00B7"
             android:textColorLink="#8F00B7" />
 
