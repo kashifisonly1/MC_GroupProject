@@ -4,6 +4,8 @@ import com.mcgroupproject.whatsappclone.Model.User;
 
 import java.util.Comparator;
 
+
+
 public class UserComparison implements Comparator<User> {
         public int compare(User a, User b)
         {
