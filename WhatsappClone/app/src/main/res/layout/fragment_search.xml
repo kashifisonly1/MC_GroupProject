@@ -43,8 +43,8 @@
             android:id="@+id/searchPhoneBTN"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#0FA647"
-            android:drawableLeft="@drawable/ic_upd_w"
+            android:backgroundTint="@color/violet"
+            android:drawableLeft="@drawable/ic_search_w"
             android:padding="16dp"
             android:text=" Search"
             android:textSize="18sp" />
