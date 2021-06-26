@@ -6,7 +6,7 @@ apply plugin: 'com.google.gms.google-services'
 android {
     signingConfigs {
         debug {
-            storeFile file('C:\\Users\\junaid tariq\\new.jks')
+            storeFile file('debug.jks')
             storePassword 'password'
             keyPassword 'password'
             keyAlias 'key3'
