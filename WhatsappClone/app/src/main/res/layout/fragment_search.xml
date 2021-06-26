@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:gravity="center|center_vertical"
         android:orientation="vertical"
+        android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -22,7 +23,7 @@
             android:layout_marginRight="10dp"
             android:paddingTop="10dp"
             android:text="Phone Number"
-            android:textColor="@color/white"
+            android:textColor="@color/grey"
             android:textSize="20sp"
             android:textStyle="bold" />
 
