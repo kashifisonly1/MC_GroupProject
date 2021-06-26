@@ -4,7 +4,7 @@
     <item
         android:id="@+id/action_chat"
         android:enabled="true"
-        android:icon="@drawable/ic_chats"
+        android:icon="@drawable/ic_chats_w"
         android:title="@string/chat"
         android:onClick="chatlistFunction"
         app:showAsAction="ifRoom" />
@@ -12,14 +12,14 @@
     <item
         android:id="@+id/action_search"
         android:enabled="true"
-        android:icon="@drawable/ic_search"
+        android:icon="@drawable/ic_search_w"
         android:title="Search"
         android:onClick="searchPersonFunction"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_profile"
         android:enabled="true"
-        android:icon="@drawable/ic_user"
+        android:icon="@drawable/ic_user_w"
         android:title="Profile"
         android:onClick="profileFunction"
         app:showAsAction="ifRoom"/>
