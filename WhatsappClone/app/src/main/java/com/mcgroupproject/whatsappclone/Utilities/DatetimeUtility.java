@@ -3,7 +3,7 @@ package com.mcgroupproject.whatsappclone.Utilities;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
+// obvious as per name
 public class DatetimeUtility {
     public static String GetDate(long time) {
         Date date = new Date(time);

@@ -6,6 +6,8 @@ import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
 
+// convert the uploaded img to bit array
+
 public class ImageUtility {
     public static byte[] ImageToBytes(ImageView img) {
         img.setDrawingCacheEnabled(true);

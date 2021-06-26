@@ -13,8 +13,10 @@ import com.mcgroupproject.whatsappclone.Model.User;
 
 import java.util.ArrayList;
 import java.util.List;
-
+// user db handler
 public class UserDB extends SQLiteOpenHelper {
+    // main variables
+
     public static UserDB db;
     public static final int VERSION = 16;
     public static final String USERS = "users";
@@ -52,6 +54,7 @@ public class UserDB extends SQLiteOpenHelper {
         super(context, "whatsapp.db", null, VERSION);
     }
 
+    // fetch user By ID
     public static User GetUser(User user) {
         return db.GetUserByID(user);
     }
